@@ -8,7 +8,7 @@ class Update_m_borang_Request extends FormRequest
 {
     public function authorize()
     {
-        return \Gate::allows('lkps_edit');
+        return \Gate::allows('borang_edit');
     }
 
     public function rules()

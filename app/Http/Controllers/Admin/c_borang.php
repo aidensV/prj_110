@@ -78,6 +78,7 @@ class c_borang extends Controller
 
     public function update(Update_m_borang_Request $request, $id)
     {
+        
         abort_unless(\Gate::allows('borang_edit'), 403);
         $m_borang = m_borang::find($id);
         $m_borang->update($request->all());

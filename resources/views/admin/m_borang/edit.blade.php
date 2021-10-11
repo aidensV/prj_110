@@ -12,11 +12,14 @@
             @method('PUT')
             <div class="form-group {{ $errors->has( 'elemen') ? 'has-error' : '' }}">
                 <label for="elemen">Elemen</label>
-                @if(isset(Auth::user()->roles) && Auth::user()->roles[0]->title == 'Staff')
-                    <input type="text" readonly  name="elemen" class="form-control" value="{{ old('elemen', isset($m_borang) ? $m_borang->elemen : '') }}">
-                    @else
-                    <input type="text" id="elemen" name="elemen" class="form-control" value="{{ old('elemen', isset($m_borang) ? $m_borang->elemen : '') }}">
-                @endif
+                @can('borang_nilai')
+                    
+                <input type="text" id="elemen" name="elemen" class="form-control" value="{{ old('elemen', isset($m_borang) ? $m_borang->elemen : '') }}">
+                    @endcan
+                    @cannot('borang_nilai')
+                    <input type="text" readonly  name="elemen" class="form-control" value="{{ old('elemen', isset($m_borang) ? $m_borang->elemen : '') }}">    
+                    @endcannot
+                
                 @if($errors->has('elemen'))
                     <p class="help-block">
                         {{ $errors->first('elemen') }}
@@ -28,11 +31,15 @@
             </div>
             <div class="form-group {{ $errors->has( 'no_stndr') ? 'has-error' : '' }}">
                 <label for="no_stndr">No Standar</label>
-                @if(isset(Auth::user()->roles) && Auth::user()->roles[0]->title == 'Staff')
-                <input readonly type="text"  name="no_stndr" class="form-control" value="{{ old('no_stndr', isset($m_borang) ? $m_borang->no_stndr : '') }}">
-                @else
+                @can('borang_nilai')
+                
                 <input type="text" id="no_stndr" name="no_stndr" class="form-control" value="{{ old('no_stndr', isset($m_borang) ? $m_borang->no_stndr : '') }}">
-                @endif
+                @endcan
+                @cannot('borang_nilai')
+                <input readonly type="text"  name="no_stndr" class="form-control" value="{{ old('no_stndr', isset($m_borang) ? $m_borang->no_stndr : '') }}">
+                    
+                @endcannot
+                
                 @if($errors->has('no_stndr'))
                     <p class="help-block">
                         {{ $errors->first('no_stndr') }}
@@ -55,11 +62,13 @@
             </div>
             <div class="form-group {{ $errors->has( 'skor_PS') ? 'has-error' : '' }}">
                 <label for="skor_PS">Skor PS</label>
-                @if(isset(Auth::user()->roles) && Auth::user()->roles[0]->title == 'Staff')
-                <input readonly type="text"  name="skor_PS" class="form-control" value="{{ old('skor_PS', isset($m_borang) ? $m_borang->skor_PS : '') }}">
-                @else
+                @can('borang_nilai')
                 <input type="text" id="skor_PS" name="skor_PS" class="form-control" value="{{ old('skor_PS', isset($m_borang) ? $m_borang->skor_PS : '') }}">
-                @endif
+                @endcan
+                @cannot('borang_nilai')
+                <input readonly type="text"  name="skor_PS" class="form-control" value="{{ old('skor_PS', isset($m_borang) ? $m_borang->skor_PS : '') }}">
+                
+                @endcannot
                 @if($errors->has('skor_PS'))
                     <p class="help-block">
                         {{ $errors->first('skor_PS') }}
@@ -83,7 +92,12 @@
             </div>
             <div class="form-group {{ $errors->has( 'ket') ? 'has-error' : '' }}">
                 <label for="ket">Keterangan</label>
+                @can('borang_nilai')
                 <input type="text" id="ket" name="ket" class="form-control" value="{{ old('ket', isset($m_borang) ? $m_borang->ket : '') }}">
+                @endcan
+                @cannot('borang_nilai')
+                <input type="text" id="ket" readonly name="ket" class="form-control" value="{{ old('ket', isset($m_borang) ? $m_borang->ket : '') }}">
+                @endcannot
                 @if($errors->has('ket'))
                     <p class="help-block">
                         {{ $errors->first('ket') }}
@@ -95,11 +109,12 @@
             </div>
             <div class="form-group {{ $errors->has( 'stnd_unila') ? 'has-error' : '' }}">
                 <label for="stnd_unila">Standar Unila</label>
-                @if(isset(Auth::user()->roles) && Auth::user()->roles[0]->title == 'Staff')
-                <input type="text" readonly name="stnd_unila" class="form-control" value="{{ old('stnd_unila', isset($m_borang) ? $m_borang->stnd_unila : '') }}">
-                @else
+                @can('borang_nilai')
                 <input type="text" id="stnd_unila" name="stnd_unila" class="form-control" value="{{ old('stnd_unila', isset($m_borang) ? $m_borang->stnd_unila : '') }}">
-                @endif
+                @endcan
+                @cannot('borang_nilai')
+                <input type="text" readonly name="stnd_unila" class="form-control" value="{{ old('stnd_unila', isset($m_borang) ? $m_borang->stnd_unila : '') }}">
+                @endcannot
                 @if($errors->has('stnd_unila'))
                     <p class="help-block">
                         {{ $errors->first('stnd_unila') }}
@@ -111,11 +126,12 @@
             </div>
             <div class="form-group {{ $errors->has( 'bobot_sumber') ? 'has-error' : '' }}">
                 <label for="bobot_sumber">Bobot Sumber</label>
-                @if(isset(Auth::user()->roles) && Auth::user()->roles[0]->title == 'Staff')
-                <input type="text" readonly name="bobot_sumber" class="form-control" value="{{ old('bobot_sumber', isset($m_borang) ? $m_borang->bobot_sumber : '') }}">
-                @else
+                @can('borang_nilai')
                 <input type="text" id="bobot_sumber" name="bobot_sumber" class="form-control" value="{{ old('bobot_sumber', isset($m_borang) ? $m_borang->bobot_sumber : '') }}">
-                @endif
+                @endcan
+                @cannot('borang_nilai')
+                <input type="text" readonly name="bobot_sumber" class="form-control" value="{{ old('bobot_sumber', isset($m_borang) ? $m_borang->bobot_sumber : '') }}">
+                @endcannot
                 @if($errors->has('bobot_sumber'))
                     <p class="help-block">
                         {{ $errors->first('bobot_sumber') }}
@@ -127,7 +143,13 @@
             </div>
             <div class="form-group {{ $errors->has( 'bobot_ami') ? 'has-error' : '' }}">
                 <label for="bobot_ami">Bobot Ami</label>
+                @can('borang_nilai')
                 <input type="text" id="bobot_ami" name="bobot_ami" class="form-control" value="{{ old('bobot_ami', isset($m_borang) ? $m_borang->bobot_ami : '') }}">
+                @endcan
+                @cannot('borang_nilai')
+                
+                <input type="text" readonly id="bobot_ami" name="bobot_ami" class="form-control" value="{{ old('bobot_ami', isset($m_borang) ? $m_borang->bobot_ami : '') }}">
+                @endcannot
                 @if($errors->has('bobot_ami'))
                     <p class="help-block">
                         {{ $errors->first('bobot_ami') }}
@@ -139,7 +161,12 @@
             </div>
             <div class="form-group {{ $errors->has( 'capaian') ? 'has-error' : '' }}">
                 <label for="capaian">Capaian</label>
+                @can('borang_nilai')
                 <input type="text" id="capaian" name="capaian" class="form-control" value="{{ old('capaian', isset($m_borang) ? $m_borang->capaian : '') }}">
+                @endcan
+                @cannot('borang_nilai')
+                <input readonly type="text" id="capaian" name="capaian" class="form-control" value="{{ old('capaian', isset($m_borang) ? $m_borang->capaian : '') }}">
+                @endcannot
                 @if($errors->has('capaian'))
                     <p class="help-block">
                         {{ $errors->first('capaian') }}
