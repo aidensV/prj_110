@@ -1,51 +1,79 @@
 @extends('layouts.admin')
 @section('content')
-<div class="card">
-    <div class="card-header">
-        LKPS
-    </div>
+    <div class="card">
+        <div class="card-header row">
 
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class=" table table-bordered table-striped table-hover datatable">
-                <thead>
-                    <tr>
-                        <th width="10">
+            <div class="col-8">
+                LKPS
+                
+            </div>
+            <div class="col-4">
+                <select class="form-control" id="select_prodi" onchange="selectProdi()">
+                    <option value="">Pilih Jurusan</option>
+                    @foreach ($user as $item)
+                        @if (Session::get('prodi_id') == $item->id)
+                            <option selected value="{{ $item->id }}">{{ $item->name }}</option>
+                        @else
+                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                        @endif
 
-                        </th>
-                        <th width="3">
-                            Nilai
-                        </th>
-                        <th>
-                            LKPS
-                        </th>
-                        <th>
-                            Aksi
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($listlkps as $item)
-                    <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <input type="number" id="{{$item->id}}" onkeyup="changeNilai('{{$item->id}}')" />
-                        </td>
-                        <td>
-                            {{$item->name}}
-                        </td>
-                        <td>
-                            @can('lkps_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ $item->url ? route($item->url) :'#' }}">
-                                        {{ trans('global.view') }}
-                                    </a>
-                            @endcan
-                        </td>
-                    </tr>
                     @endforeach
-                   
-                    <tr>
+                </select>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class=" table table-bordered table-striped table-hover datatable">
+                    <thead>
+                        <tr>
+                            <th width="10">
+
+                            </th>
+                            
+                                <th width="3">
+                                    Nilai
+                                </th>
+                            
+                            <th>
+                                LKPS
+                            </th>
+                            <th>
+                                Aksi
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($listlkps as $item)
+                            <tr>
+                                <td>
+                                </td>
+                                @can('lkps_nilai')
+                                    <td>
+                                        <input type="number" id="{{ $item->id }}"
+                                            onkeyup="changeNilai('{{ $item->id }}')" value="{{ $item->value }}" />
+                                    </td>
+                                    
+                                @endcan
+                                @cannot('lkps_nilai')
+                                <td>
+                                    <input type="text" class="form-control" readonly value="{{ $item->value }}" />
+                                </td> 
+                                @endcannot
+                                <td>
+                                    {{ $item->name }}
+                                </td>
+                                <td>
+                                    @can('lkps_show')
+                                        <a class="btn btn-xs btn-primary" href="{{ $item->url ? route($item->url) : '#' }}">
+                                            {{ trans('global.view') }}
+                                        </a>
+                                    @endcan
+                                </td>
+                            </tr>
+                        @endforeach
+
+                        {{-- <tr>
                     <td>
                         </td>
                         <td>
@@ -702,64 +730,94 @@
                                     </a>
                             @endcan
                         </td>
-                    </tr>
-                </tbody>
-            </table>
+                    </tr> --}}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
 @endsection
 @section('scripts')
-@parent
-<script>
-    $(function () {
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
-  let deleteButton = {
-    text: deleteButtonTrans,
-    url: "{{ route('admin.r_led.massDestroy') }}",
-    className: 'btn-danger',
-    action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
-          return $(entry).data('entry-id')
-      });
+    @parent
+    <script>
+        $(function() {
+            let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
+            let deleteButton = {
+                text: deleteButtonTrans,
+                url: "{{ route('admin.r_led.massDestroy') }}",
+                className: 'btn-danger',
+                action: function(e, dt, node, config) {
+                    var ids = $.map(dt.rows({
+                        selected: true
+                    }).nodes(), function(entry) {
+                        return $(entry).data('entry-id')
+                    });
 
-      if (ids.length === 0) {
-        alert('{{ trans('global.datatables.zero_selected') }}')
+                    if (ids.length === 0) {
+                        alert('{{ trans('global.datatables.zero_selected') }}')
 
-        return
-      }
+                        return
+                    }
 
-      if (confirm('{{ trans('global.areYouSure') }}')) {
-        $.ajax({
-          headers: {'x-csrf-token': _token},
-          method: 'POST',
-          url: config.url,
-          data: { ids: ids, _method: 'DELETE' }})
-          .done(function () { location.reload() })
-      }
-    }
-  }
-  let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('product_delete')
-  dtButtons.push(deleteButton)
-@endcan
+                    if (confirm('{{ trans('global.areYouSure') }}')) {
+                        $.ajax({
+                                headers: {
+                                    'x-csrf-token': _token
+                                },
+                                method: 'POST',
+                                url: config.url,
+                                data: {
+                                    ids: ids,
+                                    _method: 'DELETE'
+                                }
+                            })
+                            .done(function() {
+                                location.reload()
+                            })
+                    }
+                }
+            }
+            let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
+            @can('product_delete')
+                dtButtons.push(deleteButton)
+            @endcan
 
-  $('.datatable:not(.ajaxTable)').DataTable({ buttons: dtButtons })
-})
+            $('.datatable:not(.ajaxTable)').DataTable({
+                buttons: dtButtons
+            })
+        })
 
-function changeNilai(id) {
-    var nilai = $('#'+id).val();
-    axios.post("{{url('api/lkps/change/nilai')}}", {
-    id: id,
-    nilai: nilai
-  })
-  .then(function (response) {
-    console.log(response);
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
-}
+        function changeNilai(id) {
+            var prodi_id = $('#select_prodi').val();
+            var nilai = $('#' + id).val();
+            axios.post("{{ url('api/lkps/change/nilai') }}", {
+                    id: id,
+                    nilai: nilai,
+                    prodi_id:prodi_id
+                })
+                .then(function(response) {
+                    console.log(response);
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+        }
 
-</script>
+        function selectProdi() {
+            var prodi_id = $('#select_prodi').val();
+            axios.post("{{ url('set-session') }}", {
+                    prodi_id: prodi_id,
+                    
+                })
+                .then(function(response) {
+                    console.log(response);
+                    window.location.href = "{{url('admin/r_lkps_penilaian/daftar_lkps?prodi_id=')}}"+prodi_id;
+                })
+                .catch(function(error) {
+                    console.log(error);
+                    
+                });
+            
+        }
+    </script>
 @endsection

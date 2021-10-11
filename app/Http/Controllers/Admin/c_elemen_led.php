@@ -8,6 +8,7 @@ use App\Http\Requests\elemen_led\Store_elemen_led_Request;
 use App\Http\Requests\elemen_led\Update_elemen_led_Request;
 use App\Models\elemen_led;
 use App\Models\elemen_led_detail;
+use Illuminate\Support\Facades\DB;
 
 class c_elemen_led extends Controller
 {
@@ -16,7 +17,7 @@ class c_elemen_led extends Controller
         abort_unless(\Gate::allows('lkps_access'), 403);
 
         $elemen_led = elemen_led::all();
-
+        
         return view('admin.elemen_led.index', compact('elemen_led'));
     }
 
@@ -66,7 +67,18 @@ class c_elemen_led extends Controller
         abort_unless(\Gate::allows('lkps_edit'), 403);
         $elemen_led = elemen_led::find($id);
         $elemen_led->update($request->all());
-
+        elemen_led_detail::whereIn('id',$request->id_detail)->delete();
+        $elemen_led_id = array();
+        for($i=0;$i<sizeof($request->deskripsi);$i++){
+            $elemen_led_detail = elemen_led_detail::create([
+                'deskripsi'     => $request->deskripsi[$i],
+                'bobot'       => $request->bobot[$i],
+            ]);
+            array_push($elemen_led_id,$elemen_led_detail->id);
+        }
+        for($i=0;$i<sizeof($elemen_led_id);$i++){
+            $elemen_led->detail()->sync($elemen_led_id[$i],[]);
+        }
         $notification = array(
             'message' => 'Post created successfully!',
             'alert-type' => 'success'
@@ -86,6 +98,8 @@ class c_elemen_led extends Controller
     {
         abort_unless(\Gate::allows('lkps_delete'), 403);
             $elemen_led = elemen_led::find($id);
+            $idDetail = $elemen_led->detail()->pluck('id');
+            elemen_led_detail::whereIn('id',$idDetail)->delete();
             $elemen_led->delete();
             return back();
         

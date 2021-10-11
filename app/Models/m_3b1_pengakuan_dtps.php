@@ -14,6 +14,7 @@ class m_3b1_pengakuan_dtps extends Model
         'tingkat_internasional',
         'tingkat_nasional',
         'tingkat_wilayah',
-        'tahun',     
+        'tahun',
+        'prodi_id'     
     ];
 }

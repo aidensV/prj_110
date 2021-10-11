@@ -13,5 +13,6 @@ class m_3b2_penelitian_dtps extends Model
         'jumlah_judul_penelitian_ts1',
         'jumlah_judul_penelitian_ts',
         'jumlah',
+        'prodi_id'
     ];
 }

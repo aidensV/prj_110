@@ -13,5 +13,6 @@ class m_8f3_produk_dtps_mhs extends Model
         'deskripsi_produk',
         'bukti',
         'tahun',
+        'prodi_id'
     ];
 }

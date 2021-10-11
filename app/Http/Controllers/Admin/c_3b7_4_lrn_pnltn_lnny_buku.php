@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\m_3b7_4_lrn_pnltn_lnny_buku\Store_m_3b7_4_lrn_pnltn_lnny_buku_Request;
 use App\Http\Requests\m_3b7_4_lrn_pnltn_lnny_buku\Update_m_3b7_4_lrn_pnltn_lnny_buku_Request;
+use App\m_lkps;
 use App\Models\m_3b7_4_lrn_pnltn_lnny_buku;
+use Illuminate\Support\Facades\Session;
 
 class c_3b7_4_lrn_pnltn_lnny_buku extends Controller
 {
@@ -29,17 +31,22 @@ class c_3b7_4_lrn_pnltn_lnny_buku extends Controller
     public function store(Store_m_3b7_4_lrn_pnltn_lnny_buku_Request $request)
     {
         abort_unless(\Gate::allows('lkps_create'), 403);
-
+        $prodiId = Session::get('prodi_id');
+        $request->merge([
+            'prodi_id' => $prodiId
+        ]);
         $m_3b7_4_lrn_pnltn_lnny_buku = m_3b7_4_lrn_pnltn_lnny_buku::create($request->all());
-
+        $lkps = m_lkps::where('id',21)->first();
+        $lkps->luaranPenelitianLainnyaBuku()->save($m_3b7_4_lrn_pnltn_lnny_buku);
         return redirect()->route('admin.r_3b7_4_lrn_pnltn_lnny_buku.index');
     }
 
     public function edit($id)
     {
         abort_unless(\Gate::allows('lkps_edit'), 403);
+        
         $m_3b7_4_lrn_pnltn_lnny_buku = m_3b7_4_lrn_pnltn_lnny_buku::find($id);
-
+       
         return view('admin.m_3b7_4_lrn_pnltn_lnny_buku.edit', compact('m_3b7_4_lrn_pnltn_lnny_buku'));
     }
 

@@ -13,5 +13,6 @@ class m_7_pkm_dtps_yg_melibatkan_mhs extends Model
         'nama_mahasiswa',
         'judul_kegiatan',
         'tahun',
+        'prodi_id'
     ];
 }

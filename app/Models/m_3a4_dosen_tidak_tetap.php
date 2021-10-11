@@ -16,6 +16,7 @@ class m_3a4_dosen_tidak_tetap extends Model
         'sertifikat_pendidik_profesional',
         'sertifikat_kompetensi_profesi_industri',
         'matkul_ps_akreditasi',
-        'kesesuaian_dengan_matkul',     
+        'kesesuaian_dengan_matkul', 
+        'prodi_id'    
     ];
 }

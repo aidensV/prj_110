@@ -12,6 +12,7 @@
             <div class="form-group {{ $errors->has( 'indikator') ? 'has-error' : '' }}">
                 <label for="indikator">Indikator</label>
                 <input type="text" id="indikator" name="indikator" class="form-control" value="{{ old('indikator', isset($m_iku) ? $m_iku->indikator : '') }}">
+                <input type="hidden" id="prodi_id" name="prodi_id" class="form-control" value="{{request()->get('prodi_id')}}">
                 @if($errors->has('indikator'))
                     <p class="help-block">
                         {{ $errors->first('indikator') }}

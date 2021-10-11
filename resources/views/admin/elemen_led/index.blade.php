@@ -45,6 +45,7 @@
                             <td>
                             <table>
                                 <tbody>
+                                    
                             @foreach($elemen_led->detail as $detail)
                             <tr>
                                 <td>

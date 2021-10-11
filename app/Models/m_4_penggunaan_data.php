@@ -16,5 +16,6 @@ class m_4_penggunaan_data extends Model
         'program_studi_ts1',
         'program_studi_ts',
         'rata_rata', 
+        'prodi_id'
     ]; 
 }

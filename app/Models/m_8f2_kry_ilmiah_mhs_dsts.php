@@ -11,5 +11,6 @@ class m_8f2_kry_ilmiah_mhs_dsts extends Model
         'nama_mahasiswa',
         'judul_artikel_yang_disitasi',
         'jumlah_sitasi',
+        'prodi_id'
     ];
 }

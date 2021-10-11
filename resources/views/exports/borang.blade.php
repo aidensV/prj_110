@@ -54,16 +54,16 @@
         <td style="font-size: 10px">{{$item->elemen}}</td>
         <td style="font-size: 10px">
             @foreach ($item->indikator as $indikator)
-            {{$indikator->name}}<hr style="height:1px;border-width:0;color:rgb(255, 255, 255);background-color:rgb(255, 255, 255)">
+            {{$indikator->value_indicator}}<hr style="height:1px;border-width:0;color:rgb(255, 255, 255);background-color:rgb(255, 255, 255)">
             @endforeach
             </td>
         <td style="font-size: 10px">{{$item->skor_PS}}</td>
         <td style="font-size: 10px">{{$item->skor_auditor}}</td>
         <td style="font-size: 10px">{{$item->ket}}</td>
         <td style="font-size: 10px">{{$item->stnd_unila}}</td>
-        <td style="font-size: 10px">{{$item->bobot}}</td>
-        <td style="font-size: 10px">{{$item->bobot}}</td>
-        <td style="font-size: 10px">{{$item->persen}}</td>
+        <td style="font-size: 10px">{{$item->bobot_sumber}}</td>
+        <td style="font-size: 10px">{{$item->bobot_ami}}</td>
+        <td style="font-size: 10px">{{$item->capaian}}</td>
         <td style="font-size: 10px">{{$item->kinerja}}</td>
         <td style="font-size: 10px">{{$item->catatan}}</td>
     </tr>

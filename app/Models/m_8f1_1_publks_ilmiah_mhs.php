@@ -13,5 +13,6 @@ class m_8f1_1_publks_ilmiah_mhs extends Model
         'jumlah_judul_ts1',
         'jumlah_judul_ts',
         'jumlah',
+        'prodi_id'
     ];
 }

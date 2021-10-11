@@ -22,7 +22,9 @@
                         {{ trans('Deskripsi') }}
                     </th>
                     <td>
-                        {{ $elemen_led->deskripsi }}
+                        @foreach ($elemen_led->detail as $item)
+                            {{$item->deskripsi}}<hr>
+                        @endforeach
                     </td>
                 </tr>
                 <tr>
@@ -30,7 +32,9 @@
                         {{ trans('Bobot') }}
                     </th>
                     <td>
-                        {{ $elemen_led->bobot }}
+                        @foreach ($elemen_led->detail as $item)
+                        {{$item->bobot}}<hr>
+                    @endforeach
                     </td>
                 </tr>
             </tbody>

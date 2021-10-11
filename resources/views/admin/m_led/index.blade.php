@@ -1,17 +1,33 @@
 @extends('layouts.admin')
 @section('content')
-@can('product_create')
+@can('led_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route("admin.r_led.create") }}">
+            <button class="btn btn-success" onclick="createData()">
             Tambah LED
-            </a>
+            </button>
         </div>
     </div>
 @endcan
 <div class="card">
-    <div class="card-header">
-        LED
+    <div class="card-header row">
+        
+        <div class="col-8">
+            LED
+        </div>
+        <div class="col-4">
+            <select class="form-control" id="select_prodi" onchange="selectProdi()">
+                <option value="">Pilih Jurusan</option>
+                @foreach ($user as $item)
+                @if (request()->get('prodi_id') == $item->id)
+                <option selected value="{{$item->id}}">{{$item->name}}</option>
+                @else
+                <option value="{{$item->id}}">{{$item->name}}</option>
+                @endif
+                    
+                @endforeach
+            </select>
+        </div>
     </div>
 
     <div class="card-body">
@@ -22,15 +38,14 @@
                         <th width="10">
 
                         </th>
+                        <th>Nilai</th>
                         <th>
                             Elemen LED
                         </th>
                         <th>
                             Ket
                         </th>
-                        <th>
-                            Nilai
-                        </th>
+                      
                         <th>
                             Penjelasan
                         </th>
@@ -45,15 +60,23 @@
                             <td>
 
                             </td>
+                            {{-- @can('led_nilai') --}}
                             <td>
-                                {{ $m_led->elemen_led ?? '' }}
+                                @can('led_nilai')
+                                    <input type="number" id="{{$m_led->id}}" onkeyup="changeNilai('{{$m_led->id}}')" value="{{$m_led->nilai}}" />
+                                @endcan
+                                @cannot('led_nilai')
+                                <input type="text" class="text-muted form-control" id="{{$m_led->id}}" readonly  value="{{$m_led->nilai}}" />
+                                @endcannot
+                            </td>
+                            {{-- @endcan --}}
+                            <td>
+                                {{ $m_led->elementLed->kriteria ?? '' }}
                             </td>
                             <td>
                                 {{ $m_led->ket ?? '' }}
                             </td>
-                            <td>
-                                {{ $m_led->nilai ?? '' }}
-                            </td>
+                         
                             <td>
                                 <a href="{{ asset('file_record/'.$m_led->penjelasan)}}">Download</a>
                             </td>
@@ -83,6 +106,20 @@
 @section('scripts')
 @parent
 <script>
+    function changeNilai(id) {
+    var nilai = $('#'+id).val();
+    axios.post("{{url('api/led/change/nilai')}}", {
+    id: id,
+    nilai: nilai
+  })
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+}
+
     $(function () {
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
@@ -117,6 +154,17 @@
 
   $('.datatable:not(.ajaxTable)').DataTable({ buttons: dtButtons })
 })
+
+function selectProdi() {
+    var prodi_id = $('#select_prodi').val();
+    window.location.href = "{{url('admin/r_led?prodi_id=')}}"+prodi_id;
+}
+
+function createData() {
+    var prodi_id = $('#select_prodi').val();
+    var prodi_name = $("#select_prodi option:selected").text();;
+    window.location.href = "{{url('admin/r_led/create?prodi_id=')}}"+prodi_id+'&&prodi_name='+prodi_name;
+}
 
 </script>
 @endsection

@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\m_5a_kurikulum_capaian_pmbljrn\Store_m_5a_kurikulum_capaian_pmbljrn_Request;
 use App\Http\Requests\m_5a_kurikulum_capaian_pmbljrn\Update_m_5a_kurikulum_capaian_pmbljrn_Request;
+use App\m_lkps;
 use App\Models\m_5a_kurikulum_capaian_pmbljrn;
+use Illuminate\Support\Facades\Session;
 
 class c_5a_kurikulum_capaian_pmbljrn extends Controller
 {
@@ -29,9 +31,13 @@ class c_5a_kurikulum_capaian_pmbljrn extends Controller
     public function store(Store_m_5a_kurikulum_capaian_pmbljrn_Request $request)
     {
         abort_unless(\Gate::allows('lkps_create'), 403);
-
+        $prodiId = Session::get('prodi_id');
+        $request->merge([
+            'prodi_id' => $prodiId
+        ]);
         $m_5a_kurikulum_capaian_pmbljrn = m_5a_kurikulum_capaian_pmbljrn::create($request->all());
-
+        $lkps = m_lkps::where('id',23)->first();
+        $lkps->kurikulumCapaianPjr()->save($m_5a_kurikulum_capaian_pmbljrn);
         return redirect()->route('admin.r_5a_kurikulum_capaian_pmbljrn.index');
     }
 

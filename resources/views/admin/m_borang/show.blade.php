@@ -30,9 +30,9 @@
                         {{ trans('Indikator Penilaian') }}
                     </th>
                     <td>
-                        @foreach ($data_detail as $item)
+                        @foreach ($m_borang->indikator as $item)
                         
-                            {{ $item }}<br>
+                            {{ $item->value_indicator }}<br>
                         
                         @endforeach
                     </td>
@@ -71,23 +71,31 @@
                 </tr>
                 <tr>
                     <th>
-                        {{ trans('Bobot') }}
+                        {{ trans('Bobot Sumber') }}
                     </th>
                     <td>
-                        {{ $m_borang->bobot }}
+                        {{ $m_borang->bobot_sumber }}
                     </td>
                 </tr>
                 <tr>
                     <th>
-                        {{ trans('Persen') }}
+                        {{ trans('Bobot Ami') }}
                     </th>
                     <td>
-                        {{ $m_borang->persen }}
+                        {{ $m_borang->bobot_ami }}
                     </td>
                 </tr>
                 <tr>
                     <th>
-                        {{ trans('Kinerja') }}
+                        {{ trans('Capaian') }}
+                    </th>
+                    <td>
+                        {{ $m_borang->capaian }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        {{ trans('Persen Kinerja') }}
                     </th>
                     <td>
                         {{ $m_borang->kinerja }}

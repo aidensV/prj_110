@@ -11,5 +11,6 @@ class m_3b7_4_lrn_pnltn_lnny_buku extends Model
         'luaran_penelitian_dan_pkm',
         'tahun',
         'keterangan', 
+        'prodi_id'
     ]; 
 }

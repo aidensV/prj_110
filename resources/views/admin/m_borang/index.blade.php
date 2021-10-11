@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-@can('product_create')
+@can('borang_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
             <button class="btn btn-success" onclick="createData()">
@@ -67,13 +67,16 @@
                             Standar Unila
                         </th>
                         <th>
-                            Bobot
+                            Bobot Sumber
                         </th>
                         <th>
-                            Persen
+                            Bobot Ami
                         </th>
                         <th>
-                            Kinerja
+                            Capaian
+                        </th>
+                        <th>
+                            Persen Kinerja
                         </th>
                         <th>
                             Catatan
@@ -108,10 +111,13 @@
                                 {{ $m_borang->stnd_unila ?? '' }}
                             </td>
                             <td>
-                                {{ $m_borang->bobot ?? '' }}
+                                {{ $m_borang->bobot_sumber ?? '' }}
                             </td>
                             <td>
-                                {{ $m_borang->persen ?? '' }}
+                                {{ $m_borang->bobot_ami ?? '' }}
+                            </td>
+                            <td>
+                                {{ $m_borang->capaian ?? '' }}
                             </td>
                             <td>
                                 {{ $m_borang->kinerja ?? '' }}

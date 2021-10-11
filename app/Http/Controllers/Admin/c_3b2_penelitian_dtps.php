@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\m_3b2_penelitian_dtps\Store_m_3b2_penelitian_dtps_Request;
 use App\Http\Requests\m_3b2_penelitian_dtps\Update_m_3b2_penelitian_dtps_Request;
+use App\m_lkps;
 use App\Models\m_3b2_penelitian_dtps;
+use Illuminate\Support\Facades\Session;
 
 class c_3b2_penelitian_dtps extends Controller
 {
@@ -29,9 +31,13 @@ class c_3b2_penelitian_dtps extends Controller
     public function store(Store_m_3b2_penelitian_dtps_Request $request)
     {
         abort_unless(\Gate::allows('lkps_create'), 403);
-
+        $prodiId = Session::get('prodi_id');
+        $request->merge([
+            'prodi_id' => $prodiId
+        ]);
         $m_3b2_penelitian_dtps = m_3b2_penelitian_dtps::create($request->all());
-
+        $lkps = m_lkps::where('id',12)->first();
+        $lkps->penelitianDtps()->save($m_3b2_penelitian_dtps);
         return redirect()->route('admin.r_3b2_penelitian_dtps.index');
     }
 

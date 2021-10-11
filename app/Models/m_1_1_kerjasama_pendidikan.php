@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\m_lkps;
 use Illuminate\Database\Eloquent\Model;
 
 class m_1_1_kerjasama_pendidikan extends Model
@@ -17,5 +18,11 @@ class m_1_1_kerjasama_pendidikan extends Model
         'bukti_kerjasama',
         'tahun_berakhirnya_kerjasama',
         'lembaga_mitra',
+        'prodi_id'
     ];
+
+    public function lkps()
+    {
+        return $this->morphToMany(m_lkps::class, 'lkpsables');
+    }
 }

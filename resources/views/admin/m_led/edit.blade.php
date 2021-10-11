@@ -23,14 +23,11 @@
                         <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ $errors->first('elemen_led') }}
                     </p>
                 @endif
-                <p class="helper-block">
-                    {{ trans('id.dikjar.isian.elemen_led_helper') }}
-                </p>
+               
             </div>
             <div class="form-group {{ $errors->has('ket') ? 'has-error' : '' }}">
-                <label for="ket">{{ trans('id.m_led.isian.ket') }}*</label>
+                <label for="ket">Keterangan*</label>
                 <p class="helper-block text-muted">
-                <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ trans('id.m_led.isian.ket_helper') }}
                 </p>
                 <input type="text" id="ket" name="ket" class="form-control" value="{{ old('ket', isset($m_led) ? $m_led->ket : '') }}">
                 @if($errors->has('ket'))
@@ -39,7 +36,7 @@
                     </p>
                 @endif
             </div>
-            <div class="form-group {{ $errors->has('nilai') ? 'has-error' : '' }}">
+            <div class="d-none">
                 <label for="nilai">Nilai*</label>
                 <input type="text" id="nilai" name="nilai" class="form-control" value="{{ old('nilai', isset($m_led) ? $m_led->nilai : '') }}">
                 @if($errors->has('nilai'))

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\m_8c_masastudi_llsn_dip\Store_m_8c_masastudi_llsn_dip_Request;
 use App\Http\Requests\m_8c_masastudi_llsn_dip\Update_m_8c_masastudi_llsn_dip_Request;
+use App\m_lkps;
 use App\Models\m_8c_masastudi_llsn_dip;
 
 class c_8c_masastudi_llsn_dip extends Controller
@@ -31,7 +32,8 @@ class c_8c_masastudi_llsn_dip extends Controller
         abort_unless(\Gate::allows('lkps_create'), 403);
 
         $m_8c_masastudi_llsn_dip = m_8c_masastudi_llsn_dip::create($request->all());
-
+        $lkps = m_lkps::where('id',33)->first();
+        $lkps->masaStudiLlsnDiploma()->save($m_8c_masastudi_llsn_dip);
         return redirect()->route('admin.r_8c_masastudi_llsn_dip.index');
     }
 

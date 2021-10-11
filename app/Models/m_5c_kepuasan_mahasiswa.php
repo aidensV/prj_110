@@ -14,5 +14,6 @@ class m_5c_kepuasan_mahasiswa extends Model
         'tingkat_kepuasan_mahasiswa_cukup',
         'tingkat_kepuasan_mahasiswa_kurang',
         'rencana_tidak_lanjut_oleh_upps',
+        'prodi_id'
     ];
 }

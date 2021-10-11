@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\m_5b_integrasi_keg_penelitian\Store_m_5b_integrasi_keg_penelitian_Request;
 use App\Http\Requests\m_5b_integrasi_keg_penelitian\Update_m_5b_integrasi_keg_penelitian_Request;
+use App\m_lkps;
 use App\Models\m_5b_integrasi_keg_penelitian;
+use Illuminate\Support\Facades\Session;
 
 class c_5b_integrasi_keg_penelitian extends Controller
 {
@@ -29,9 +31,13 @@ class c_5b_integrasi_keg_penelitian extends Controller
     public function store(Store_m_5b_integrasi_keg_penelitian_Request $request)
     {
         abort_unless(\Gate::allows('lkps_create'), 403);
-
+        $prodiId = Session::get('prodi_id');
+        $request->merge([
+            'prodi_id' => $prodiId
+        ]);
         $m_5b_integrasi_keg_penelitian = m_5b_integrasi_keg_penelitian::create($request->all());
-
+        $lkps = m_lkps::where('id',24)->first();
+        $lkps->integrasiPenelitian()->save($m_5b_integrasi_keg_penelitian);
         return redirect()->route('admin.r_5b_integrasi_keg_penelitian.index');
     }
 

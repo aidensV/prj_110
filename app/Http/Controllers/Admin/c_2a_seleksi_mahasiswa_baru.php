@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\m_2a_seleksi_mahasiswa_baru\Store_m_2a_seleksi_mahasiswa_baru_Request;
 use App\Http\Requests\m_2a_seleksi_mahasiswa_baru\Update_m_2a_seleksi_mahasiswa_baru_Request;
+use App\m_lkps;
 use App\Models\m_2a_seleksi_mahasiswa_baru;
+use Illuminate\Support\Facades\Session;
 
 class c_2a_seleksi_mahasiswa_baru extends Controller
 {
@@ -29,9 +31,13 @@ class c_2a_seleksi_mahasiswa_baru extends Controller
     public function store(Store_m_2a_seleksi_mahasiswa_baru_Request $request)
     {
         abort_unless(\Gate::allows('lkps_create'), 403);
-
+        $prodiId = Session::get('prodi_id');
+        $request->merge([
+            'prodi_id' => $prodiId
+        ]);
         $m_2a_seleksi_mahasiswa_baru = m_2a_seleksi_mahasiswa_baru::create($request->all());
-
+        $lkps = m_lkps::where('id',4)->first();
+        $lkps->seleksiMahasiswa()->save($m_2a_seleksi_mahasiswa_baru);
         return redirect()->route('admin.r_2a_seleksi_mahasiswa_baru.index');
     }
 

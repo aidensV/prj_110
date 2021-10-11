@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Admin\c_borang;
 use App\Http\Controllers\Admin\c_lkps_penilaian;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 
 Route::get('/pass',function(){
     return bcrypt('123456');
@@ -12,6 +14,11 @@ Route::redirect('/', '/login');
 Route::redirect('/home', '/admin');
 
 Auth::routes(['register' => false]);
+Route::post('set-session',function(Request $request){
+    Session::put('prodi_id', $request->prodi_id);
+
+    return response()->json(['status' => $request->all()]);
+});
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::prefix('lkps')->group(function(){

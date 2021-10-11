@@ -14,5 +14,6 @@ class m_8b2_prestasi_nonakdmk_mhs extends Model
         'tingkat_nasional',
         'tingkat_internasional',
         'prestasi_yang_dicapai',
+        'prodi_id'
     ];
 }

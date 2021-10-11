@@ -13,5 +13,6 @@ class m_6b_pen_dtps_yg_mjd_ruj_tm_tss extends Model
         'nama_mahasiswa',
         'judul_kegiatan',
         'tahun',
+        'prodi_id'
     ];
 }

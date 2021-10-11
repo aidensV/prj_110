@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\m_4_penggunaan_data\Store_m_4_penggunaan_data_Request;
 use App\Http\Requests\m_4_penggunaan_data\Update_m_4_penggunaan_data_Request;
+use App\m_lkps;
 use App\Models\m_4_penggunaan_data;
+use Illuminate\Support\Facades\Session;
 
 class c_4_penggunaan_data extends Controller
 {
@@ -29,9 +31,13 @@ class c_4_penggunaan_data extends Controller
     public function store(Store_m_4_penggunaan_data_Request $request)
     {
         abort_unless(\Gate::allows('lkps_create'), 403);
-
+        $prodiId = Session::get('prodi_id');
+        $request->merge([
+            'prodi_id' => $prodiId
+        ]);
         $m_4_penggunaan_data = m_4_penggunaan_data::create($request->all());
-
+        $lkps = m_lkps::where('id',22)->first();
+        $lkps->penggunaanData()->save($m_4_penggunaan_data);
         return redirect()->route('admin.r_4_penggunaan_data.index');
     }
 

@@ -7,7 +7,7 @@
     </div>
 
     <div class="card-body">
-    <form action="{{ route("admin.r_borang.update", [$m_borang->id]) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route("admin.r_iku.update", [$m_iku->id]) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="form-group {{ $errors->has( 'indikator') ? 'has-error' : '' }}">

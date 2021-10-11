@@ -14,5 +14,6 @@ class m_8e1_tmp_krj_lulusan extends Model
         'jmlh_lulusan_terlacak_lokal',
         'jmlh_lulusan_terlacak_nasional',
         'jmlh_lulusan_terlacak_internasional',
+        'prodi_id'
     ];
 }

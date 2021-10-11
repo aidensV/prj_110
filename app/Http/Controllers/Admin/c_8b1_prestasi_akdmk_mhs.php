@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\m_8b1_prestasi_akdmk_mhs\Store_m_8b1_prestasi_akdmk_mhs_Request;
 use App\Http\Requests\m_8b1_prestasi_akdmk_mhs\Update_m_8b1_prestasi_akdmk_mhs_Request;
+use App\m_lkps;
 use App\Models\m_8b1_prestasi_akdmk_mhs;
 
 class c_8b1_prestasi_akdmk_mhs extends Controller
@@ -31,7 +32,8 @@ class c_8b1_prestasi_akdmk_mhs extends Controller
         abort_unless(\Gate::allows('lkps_create'), 403);
 
         $m_8b1_prestasi_akdmk_mhs = m_8b1_prestasi_akdmk_mhs::create($request->all());
-
+        $lkps = m_lkps::where('id',30)->first();
+        $lkps->prestasiAkademik()->save($m_8b1_prestasi_akdmk_mhs);
         return redirect()->route('admin.r_8b1_prestasi_akdmk_mhs.index');
     }
 

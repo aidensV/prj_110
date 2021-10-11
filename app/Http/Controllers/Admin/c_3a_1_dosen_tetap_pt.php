@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\m_3a_1_dosen_tetap_pt\Store_m_3a_1_dosen_tetap_pt_Request;
 use App\Http\Requests\m_3a_1_dosen_tetap_pt\Update_m_3a_1_dosen_tetap_pt_Request;
+use App\m_lkps;
 use App\Models\m_3a_1_dosen_tetap_pt;
+use Illuminate\Support\Facades\Session;
 
 class c_3a_1_dosen_tetap_pt extends Controller
 {
@@ -29,9 +31,13 @@ class c_3a_1_dosen_tetap_pt extends Controller
     public function store(Store_m_3a_1_dosen_tetap_pt_Request $request)
     {
         abort_unless(\Gate::allows('lkps_create'), 403);
-
+        $prodiId = Session::get('prodi_id');
+        $request->merge([
+            'prodi_id' => $prodiId
+        ]);
         $m_3a_1_dosen_tetap_pt = m_3a_1_dosen_tetap_pt::create($request->all());
-
+        $lkps = m_lkps::where('id',6)->first();
+        $lkps->dosenTetepaPT()->save($m_3a_1_dosen_tetap_pt);
         return redirect()->route('admin.r_3a_1_dosen_tetap_pt.index');
     }
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\m_6b_pen_dtps_yg_mjd_ruj_tm_tss\Store_m_6b_pen_dtps_yg_mjd_ruj_tm_tss_Request;
 use App\Http\Requests\m_6b_pen_dtps_yg_mjd_ruj_tm_tss\Update_m_6b_pen_dtps_yg_mjd_ruj_tm_tss_Request;
+use App\m_lkps;
 use App\Models\m_6b_pen_dtps_yg_mjd_ruj_tm_tss;
 
 class c_6b_pen_dtps_yg_mjd_ruj_tm_tss extends Controller
@@ -31,7 +32,8 @@ class c_6b_pen_dtps_yg_mjd_ruj_tm_tss extends Controller
         abort_unless(\Gate::allows('lkps_create'), 403);
 
         $m_6b_pen_dtps_yg_mjd_ruj_tm_tss = m_6b_pen_dtps_yg_mjd_ruj_tm_tss::create($request->all());
-
+        $lkps = m_lkps::where('id',27)->first();
+        $lkps->dtpsYgJdRujukanTmTss()->save($m_6b_pen_dtps_yg_mjd_ruj_tm_tss);
         return redirect()->route('admin.r_6b_pen_dtps_yg_mjd_ruj_tm_tss.index');
     }
 

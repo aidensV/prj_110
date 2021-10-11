@@ -167,15 +167,47 @@ class DatabaseSeeder extends Seeder
             "MIPA	S3",
             "Pendidikan Dokter	S1	",
         ];
-        foreach ($fakultas as $key => $value) {
-            
-            DB::table('users')->insert([
-                'name' => $value,
-                'email' => preg_replace('/\s+/', '_',strtolower($value)).'@staff.com',
-                'password' => bcrypt('123456'),
-                'created_at' => Carbon::now()
+
+        $lkpsUrl = ["admin.r_1_1_kerjasama_pendidikan.index","admin.r_1_3_kerjasama_pkm.index",
+        "admin.r_2a_seleksi_mahasiswa_baru.index",
+        "admin.r_2b_mahasiswa_asing.index",
+        "admin.r_3a_1_dosen_tetap_pt.index",
+        "admin.r_3a_2_dospem_utama_ta.index",
+        "admin.r_3a_3_ewmp_dosen_tetap_pt.index",
+        "admin.r_3a4_dosen_tidak_tetap.index",
+        "admin.r_3a_2_dospem_utama_ta.index",
+        "admin.r_3b1_pengakuan_dtps.index",
+        "admin.r_3b2_penelitian_dtps.index",
+        "admin.r_3b3_pkm_dtps.index",
+        "admin.r_3b4_1_publikasi_ilmiah_dtps.index",
+        "admin.r_3b4_2_pagelaran_ilmiah_dtps.index",
+        "admin.r_3b5_krya_ilmiah_dtps_yg_dstasi.index",
+        "admin.r_3b6_prdk_dtps_yg_diadps_indstr.index",
+        "admin.r_3b7_1_luarn_pnltn_lainny_ptn.index",
+        "admin.r_3b7_2_lrn_pltn_lnny_hki_hk_cpt.index",
+        "admin.r_3b7_3_lrn_pnltn_lnny_tknlg_cpt.index",
+        "admin.r_4_penggunaan_data.index",
+        "admin.r_5a_kurikulum_capaian_pmbljrn.index",
+        "admin.r_5b_integrasi_keg_penelitian.index",
+        "admin.r_5c_kepuasan_mahasiswa.index",
+        "admin.r_6a_pnltn_dtps_yg_mlbtkn_mhs.index",
+        "admin.r_6b_pen_dtps_yg_mjd_ruj_tm_tss.index",
+        "admin.r_7_pkm_dtps_yg_melibatkan_mhs.index",
+        "admin.r_8a_ipk_lulusan.index",
+        "admin.r_8b1_prestasi_akdmk_mhs.index",
+        "admin.r_8b2_prestasi_nonakdmk_mhs.index"];
+        $lkps = DB::table('m_lkps')->get();
+        foreach ($lkps as $key => $value) {
+            if(isset($lkpsUrl[$key])){
+                $lkps = DB::table('m_lkps')->where('id',$value->id)->update(['url' => $lkpsUrl[$key]]);
+            }
+            // DB::table('users')->insert([
+            //     'name' => $value,
+            //     'email' => preg_replace('/\s+/', '_',strtolower($value)).'@staff.com',
+            //     'password' => bcrypt('123456'),
+            //     'created_at' => Carbon::now()
                 
-            ]);
+            // ]);
         }
     }
 }

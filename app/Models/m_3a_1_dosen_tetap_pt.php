@@ -20,5 +20,6 @@ class m_3a_1_dosen_tetap_pt extends Model
         'matkul_ps_akreditasi',
         'kssn_bdg_keahlian_dg_matkul',
         'matkul_ps_lain',
+        'prodi_id'
     ];
 }

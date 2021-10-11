@@ -19,5 +19,6 @@ class m_8c_masastudi_lllsn_dok extends Model
         'jml_mhs_lulus_ts',
         'jml_lulusan_akhir_ts',
         'rata_masa_studi',
+        'prodi_id'
     ];
 }

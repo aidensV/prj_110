@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\m_1_2_kerjasama_penelitian\Store_m_1_2_kerjasama_penelitian_Request;
 use App\Http\Requests\m_1_2_kerjasama_penelitian\Update_m_1_2_kerjasama_penelitian_Request;
+use App\m_lkps;
 use App\Models\m_1_2_kerjasama_penelitian;
 
 class c_1_2_kerjasama_penelitian extends Controller
@@ -31,7 +32,8 @@ class c_1_2_kerjasama_penelitian extends Controller
         abort_unless(\Gate::allows('lkps_create'), 403);
 
         $m_1_2_kerjasama_penelitian = m_1_2_kerjasama_penelitian::create($request->all());
-
+        $lkps = m_lkps::where('id','3')->first();
+        $lkps->kerjasamaPenelitian()->save($m_1_2_kerjasama_penelitian);
         return redirect()->route('admin.r_1_2_kerjasama_penelitian.index');
     }
 

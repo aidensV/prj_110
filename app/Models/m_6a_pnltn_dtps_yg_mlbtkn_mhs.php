@@ -13,5 +13,6 @@ class m_6a_pnltn_dtps_yg_mlbtkn_mhs extends Model
         'nama_mahasiswa',
         'judul_kegiatan',
         'tahun',
+        'prodi_id'
     ];
 }

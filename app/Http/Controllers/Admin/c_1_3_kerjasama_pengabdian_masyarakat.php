@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\m_1_3_kerjasama_pengabdian_masyarakat\Store_m_1_3_kerjasama_pengabdian_masyarakat_Request;
 use App\Http\Requests\m_1_3_kerjasama_pengabdian_masyarakat\Update_m_1_3_kerjasama_pengabdian_masyarakat_Request;
+use App\m_lkps;
 use App\Models\m_1_3_kerjasama_pengabdian_masyarakat;
+use Illuminate\Support\Facades\Session;
 
 class c_1_3_kerjasama_pengabdian_masyarakat extends Controller
 {
@@ -29,9 +31,13 @@ class c_1_3_kerjasama_pengabdian_masyarakat extends Controller
     public function store(Store_m_1_3_kerjasama_pengabdian_masyarakat_Request $request)
     {
         abort_unless(\Gate::allows('lkps_create'), 403);
-
+        $prodiId = Session::get('prodi_id');
+        $request->merge([
+            'prodi_id' => $prodiId
+        ]);
         $m_1_3_kerjasama_pengabdian_masyarakat = m_1_3_kerjasama_pengabdian_masyarakat::create($request->all());
-
+        $lkps = m_lkps::where('id',3)->first();
+        $lkps->kerjasamaPengapdianMasyarakat()->save($m_1_3_kerjasama_pengabdian_masyarakat);
         return redirect()->route('admin.r_1_3_kerjasama_pkm.index');
     }
 
@@ -66,10 +72,20 @@ class c_1_3_kerjasama_pengabdian_masyarakat extends Controller
 
     public function destroy($id)
     {
+        
         abort_unless(\Gate::allows('lkps_delete'), 403);
+        try {
             $m_1_3_kerjasama_pengabdian_masyarakat = m_1_3_kerjasama_pengabdian_masyarakat::find($id);
+            
+            // $lkps = m_lkps::where('id',3)->first();
+            // $lkps->kerjasamaPengapdianMasyarakat()->delete($m_1_3_kerjasama_pengabdian_masyarakat);
+            
             $m_1_3_kerjasama_pengabdian_masyarakat->delete();
             return back();
+        } catch (\Throwable $th) {
+            dd($th->getMessage());
+        }
+            
         
         // return back();
     }

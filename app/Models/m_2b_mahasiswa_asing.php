@@ -18,5 +18,6 @@ class m_2b_mahasiswa_asing extends Model
         'jml_mhs_asing_parttime_ts2',
         'jml_mhs_asing_parttime_ts1',
         'jml_mhs_asing_parttime_ts',
+        'prodi_id'
     ];
 }

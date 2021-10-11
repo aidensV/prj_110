@@ -10,6 +10,7 @@ class m_3b5_krya_ilmiah_dtps_yg_dstasi extends Model
     protected $fillable=[
         'nama_dosen',
         'judul_artikel_yang_disitasi',
-        'jumlah_sitasi',  
+        'jumlah_sitasi', 
+        'prodi_id' 
     ];   
 }

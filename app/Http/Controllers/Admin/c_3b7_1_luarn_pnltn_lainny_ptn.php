@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\m_3b7_1_luarn_pnltn_lainny_ptn\Store_m_3b7_1_luarn_pnltn_lainny_ptn_Request;
 use App\Http\Requests\m_3b7_1_luarn_pnltn_lainny_ptn\Update_m_3b7_1_luarn_pnltn_lainny_ptn_Request;
+use App\m_lkps;
 use App\Models\m_3b7_1_luarn_pnltn_lainny_ptn;
+use Illuminate\Support\Facades\Session;
 
 class c_3b7_1_luarn_pnltn_lainny_ptn extends Controller
 {
@@ -29,9 +31,13 @@ class c_3b7_1_luarn_pnltn_lainny_ptn extends Controller
     public function store(Store_m_3b7_1_luarn_pnltn_lainny_ptn_Request $request)
     {
         abort_unless(\Gate::allows('lkps_create'), 403);
-
+        $prodiId = Session::get('prodi_id');
+        $request->merge([
+            'prodi_id' => $prodiId
+        ]);
         $m_3b7_1_luarn_pnltn_lainny_ptn = m_3b7_1_luarn_pnltn_lainny_ptn::create($request->all());
-
+        $lkps = m_lkps::where('id',18)->first();
+        $lkps->luaranPenelitianLainnyaPtn()->save($m_3b7_1_luarn_pnltn_lainny_ptn);
         return redirect()->route('admin.r_3b7_1_luarn_pnltn_lainny_ptn.index');
     }
 

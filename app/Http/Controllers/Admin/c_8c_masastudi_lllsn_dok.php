@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\m_8c_masastudi_lllsn_dok\Store_m_8c_masastudi_lllsn_dok_Request;
 use App\Http\Requests\m_8c_masastudi_lllsn_dok\Update_m_8c_masastudi_lllsn_dok_Request;
+use App\m_lkps;
 use App\Models\m_8c_masastudi_lllsn_dok;
 
 class c_8c_masastudi_lllsn_dok extends Controller
@@ -31,7 +32,8 @@ class c_8c_masastudi_lllsn_dok extends Controller
         abort_unless(\Gate::allows('lkps_create'), 403);
 
         $m_8c_masastudi_lllsn_dok = m_8c_masastudi_lllsn_dok::create($request->all());
-
+        $lkps = m_lkps::where('id',32)->first();
+        $lkps->masaStudiLlsnDok()->save($m_8c_masastudi_lllsn_dok);
         return redirect()->route('admin.r_8c_masastudi_lllsn_dok.index');
     }
 

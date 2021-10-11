@@ -13,5 +13,6 @@ class m_3b3_pkm_dtps extends Model
         'jmlh_judul_pkm_ts1',
         'jmlh_judul_pkm_ts',
         'jumlah',
+        'prodi_id'
     ];   
 }

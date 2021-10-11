@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\m_3a5_dosen_industri\Store_m_3a5_dosen_industri_Request;
 use App\Http\Requests\m_3a5_dosen_industri\Update_m_3a5_dosen_industri_Request;
+use App\m_lkps;
 use App\Models\m_3a5_dosen_industri;
+use Illuminate\Support\Facades\Session;
 
 class c_3a5_dosen_industri extends Controller
 {
@@ -29,9 +31,13 @@ class c_3a5_dosen_industri extends Controller
     public function store(Store_m_3a5_dosen_industri_Request $request)
     {
         abort_unless(\Gate::allows('lkps_create'), 403);
-
+        $prodiId = Session::get('prodi_id');
+        $request->merge([
+            'prodi_id' => $prodiId
+        ]);
         $m_3a5_dosen_industri = m_3a5_dosen_industri::create($request->all());
-
+        $lkps = m_lkps::where('id',10)->first();
+        $lkps->dosenIndustri()->save($m_3a5_dosen_industri);
         return redirect()->route('admin.r_3a5_dosen_industri.index');
     }
 

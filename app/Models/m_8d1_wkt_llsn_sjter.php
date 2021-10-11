@@ -14,5 +14,6 @@ class m_8d1_wkt_llsn_sjter extends Model
         'jmlh_lulusan_wt_krg3bln',
         'jmlh_lulusan_wt_3smp6bln',
         'jmlh_lulusan_wt_lbh6bln',
+        'prodi_id'
     ];
 }

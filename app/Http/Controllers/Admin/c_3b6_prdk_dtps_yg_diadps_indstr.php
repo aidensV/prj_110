@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\m_3b6_prdk_dtps_yg_diadps_indstr\Store_m_3b6_prdk_dtps_yg_diadps_indstr_Request;
 use App\Http\Requests\m_3b6_prdk_dtps_yg_diadps_indstr\Update_m_3b6_prdk_dtps_yg_diadps_indstr_Request;
+use App\m_lkps;
 use App\Models\m_3b6_prdk_dtps_yg_diadps_indstr;
+use Illuminate\Support\Facades\Session;
 
 class c_3b6_prdk_dtps_yg_diadps_indstr extends Controller
 {
@@ -29,9 +31,13 @@ class c_3b6_prdk_dtps_yg_diadps_indstr extends Controller
     public function store(Store_m_3b6_prdk_dtps_yg_diadps_indstr_Request $request)
     {
         abort_unless(\Gate::allows('lkps_create'), 403);
-
+        $prodiId = Session::get('prodi_id');
+        $request->merge([
+            'prodi_id' => $prodiId
+        ]);
         $m_3b6_prdk_dtps_yg_diadps_indstr = m_3b6_prdk_dtps_yg_diadps_indstr::create($request->all());
-
+        $lkps = m_lkps::where('id',17)->first();
+        $lkps->produkIlmiahYangDiadopsi()->save($m_3b6_prdk_dtps_yg_diadps_indstr);
         return redirect()->route('admin.r_3b6_prdk_dtps_yg_diadps_indstr.index');
     }
 

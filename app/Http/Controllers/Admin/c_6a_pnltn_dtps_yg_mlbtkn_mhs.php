@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\m_6a_pnltn_dtps_yg_mlbtkn_mhs\Store_m_6a_pnltn_dtps_yg_mlbtkn_mhs_Request;
 use App\Http\Requests\m_6a_pnltn_dtps_yg_mlbtkn_mhs\Update_m_6a_pnltn_dtps_yg_mlbtkn_mhs_Request;
+use App\m_lkps;
 use App\Models\m_6a_pnltn_dtps_yg_mlbtkn_mhs;
 
 class c_6a_pnltn_dtps_yg_mlbtkn_mhs extends Controller
@@ -31,7 +32,8 @@ class c_6a_pnltn_dtps_yg_mlbtkn_mhs extends Controller
         abort_unless(\Gate::allows('lkps_create'), 403);
 
         $m_6a_pnltn_dtps_yg_mlbtkn_mhs = m_6a_pnltn_dtps_yg_mlbtkn_mhs::create($request->all());
-
+        $lkps = m_lkps::where('id',26)->first();
+        $lkps->penelitianDtpsYgMelibatkanMhs()->save($m_6a_pnltn_dtps_yg_mlbtkn_mhs);
         return redirect()->route('admin.r_6a_pnltn_dtps_yg_mlbtkn_mhs.index');
     }
 

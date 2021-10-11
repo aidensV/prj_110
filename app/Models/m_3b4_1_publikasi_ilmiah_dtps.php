@@ -12,6 +12,7 @@ class m_3b4_1_publikasi_ilmiah_dtps extends Model
         'jumlah_judul_ts2',
         'jumlah_judul_ts1',
         'jumlah_judul_ts',
-        'jumlah',  
+        'jumlah', 
+        'prodi_id' 
     ];   
 }

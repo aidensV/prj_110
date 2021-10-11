@@ -12,6 +12,7 @@ class m_3b6_prdk_dtps_yg_diadps_indstr extends Model
         'nama_produk',
         'deskripsi_produk',
         'bukti',
-        'tahun', 
+        'tahun',
+        'prodi_id' 
     ];  
 }

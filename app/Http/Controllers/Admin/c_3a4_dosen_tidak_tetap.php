@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\m_3a4_dosen_tidak_tetap\Store_m_3a4_dosen_tidak_tetap_Request;
 use App\Http\Requests\m_3a4_dosen_tidak_tetap\Update_m_3a4_dosen_tidak_tetap_Request;
+use App\m_lkps;
 use App\Models\m_3a4_dosen_tidak_tetap;
 
 class c_3a4_dosen_tidak_tetap extends Controller
@@ -31,7 +32,8 @@ class c_3a4_dosen_tidak_tetap extends Controller
         abort_unless(\Gate::allows('lkps_create'), 403);
 
         $m_3a4_dosen_tidak_tetap = m_3a4_dosen_tidak_tetap::create($request->all());
-
+        $lkps = m_lkps::where('id',9)->first();
+        $lkps->dosenTidakTeteap()->save($m_3a4_dosen_tidak_tetap);
         return redirect()->route('admin.r_3a4_dosen_tidak_tetap.index');
     }
 

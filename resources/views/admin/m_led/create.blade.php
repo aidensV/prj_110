@@ -35,8 +35,9 @@
                     </p>
                 @endif
             </div>
-            <div class="form-group {{ $errors->has('ket') ? 'has-error' : '' }}">
+            <div class="d-none">
                 <label for="ket">Nilai*</label>
+                <input type="text" id="prodi_id" name="prodi_id" class="form-control" value="{{ request()->get('prodi_id') }}">
                 <input type="number" id="nilai" name="nilai" class="form-control" value="{{ old('nilai', isset($r_led) ? $r_led->nilai : '') }}">
                 @if($errors->has('nilai'))
                     <p class="help-block text-danger mt-2">

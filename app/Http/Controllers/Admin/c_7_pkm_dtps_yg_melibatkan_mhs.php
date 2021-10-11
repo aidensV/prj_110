@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\m_7_pkm_dtps_yg_melibatkan_mhs\Store_m_7_pkm_dtps_yg_melibatkan_mhs_Request;
 use App\Http\Requests\m_7_pkm_dtps_yg_melibatkan_mhs\Update_m_7_pkm_dtps_yg_melibatkan_mhs_Request;
+use App\m_lkps;
 use App\Models\m_7_pkm_dtps_yg_melibatkan_mhs;
 
 class c_7_pkm_dtps_yg_melibatkan_mhs extends Controller
@@ -31,7 +32,8 @@ class c_7_pkm_dtps_yg_melibatkan_mhs extends Controller
         abort_unless(\Gate::allows('lkps_create'), 403);
 
         $m_7_pkm_dtps_yg_melibatkan_mhs = m_7_pkm_dtps_yg_melibatkan_mhs::create($request->all());
-
+        $lkps = m_lkps::where('id',28)->first();
+        $lkps->pkmDtpsYgMelibatkanMhs()->save($m_7_pkm_dtps_yg_melibatkan_mhs);
         return redirect()->route('admin.r_7_pkm_dtps_yg_melibatkan_mhs.index');
     }
 

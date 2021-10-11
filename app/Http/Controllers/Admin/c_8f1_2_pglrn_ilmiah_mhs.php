@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\m_8f1_2_pglrn_ilmiah_mhs\Store_m_8f1_2_pglrn_ilmiah_mhs_Request;
 use App\Http\Requests\m_8f1_2_pglrn_ilmiah_mhs\Update_m_8f1_2_pglrn_ilmiah_mhs_Request;
+use App\m_lkps;
 use App\Models\m_8f1_2_pglrn_ilmiah_mhs;
 
 class c_8f1_2_pglrn_ilmiah_mhs extends Controller
@@ -31,7 +32,8 @@ class c_8f1_2_pglrn_ilmiah_mhs extends Controller
         abort_unless(\Gate::allows('lkps_create'), 403);
 
         $m_8f1_2_pglrn_ilmiah_mhs = m_8f1_2_pglrn_ilmiah_mhs::create($request->all());
-
+        $lkps = m_lkps::where('id',42)->first();
+        $lkps->pagelaranIlmiahMhs()->save($m_8f1_2_pglrn_ilmiah_mhs);
         return redirect()->route('admin.r_8f1_2_pglrn_ilmiah_mhs.index');
     }
 

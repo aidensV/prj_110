@@ -11,5 +11,6 @@ class m_8f4_2_luaran_penelitian_mhc extends Model
         'luaran_penelitian_dan_pkm',
         'tahun',
         'keterangan',
+        'prodi_id'
     ];
 }

@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\m_2b_mahasiswa_asing\Store_m_2b_mahasiswa_asing_Request;
 use App\Http\Requests\m_2b_mahasiswa_asing\Update_m_2b_mahasiswa_asing_Request;
+use App\m_lkps;
 use App\Models\m_2b_mahasiswa_asing;
+use Illuminate\Support\Facades\Session;
 
 class c_2b_mahasiswa_asing extends Controller
 {
@@ -29,9 +31,13 @@ class c_2b_mahasiswa_asing extends Controller
     public function store(Store_m_2b_mahasiswa_asing_Request $request)
     {
         abort_unless(\Gate::allows('lkps_create'), 403);
-
+        $prodiId = Session::get('prodi_id');
+        $request->merge([
+            'prodi_id' => $prodiId
+        ]);
         $m_2b_mahasiswa_asing = m_2b_mahasiswa_asing::create($request->all());
-
+        $lkps = m_lkps::where('id',5)->first();
+        $lkps->seleksiMahasiswa()->save($m_2b_mahasiswa_asing);
         return redirect()->route('admin.r_2b_mahasiswa_asing.index');
     }
 

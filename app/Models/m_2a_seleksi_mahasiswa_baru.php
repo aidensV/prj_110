@@ -16,5 +16,6 @@ class m_2a_seleksi_mahasiswa_baru extends Model
         'jmlh_mhs_baru_trf',
         'jmlh_mhs_aktif_reg',
         'jmlh_mhs_aktif_trf',
+        'prodi_id'
     ];
 }

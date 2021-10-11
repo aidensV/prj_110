@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\m_8f2_kry_ilmiah_mhs_dsts\Store_m_8f2_kry_ilmiah_mhs_dsts_Request;
 use App\Http\Requests\m_8f2_kry_ilmiah_mhs_dsts\Update_m_8f2_kry_ilmiah_mhs_dsts_Request;
+use App\m_lkps;
 use App\Models\m_8f2_kry_ilmiah_mhs_dsts;
 
 class c_8f2_kry_ilmiah_mhs_dsts extends Controller
@@ -31,7 +32,8 @@ class c_8f2_kry_ilmiah_mhs_dsts extends Controller
         abort_unless(\Gate::allows('lkps_create'), 403);
 
         $m_8f2_kry_ilmiah_mhs_dsts = m_8f2_kry_ilmiah_mhs_dsts::create($request->all());
-
+        $lkps = m_lkps::where('id',43)->first();
+        $lkps->karyaIlmiahMhsDisitasi()->save($m_8f2_kry_ilmiah_mhs_dsts);
         return redirect()->route('admin.r_8f2_kry_ilmiah_mhs_dsts.index');
     }
 

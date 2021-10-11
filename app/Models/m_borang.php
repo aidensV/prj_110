@@ -15,9 +15,10 @@ class m_borang extends Model
         'skor_auditor',
         'ket',
         'stnd_unila',
-        'bobot',
-        'persen',
+        'bobot_sumber',
+        'bobot_ami',
         'kinerja',
+        'capaian',
         'catatan',
     ];
 

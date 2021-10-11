@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\m_8c_masastudi_llsn_mgr\Store_m_8c_masastudi_llsn_mgr_Request;
 use App\Http\Requests\m_8c_masastudi_llsn_mgr\Update_m_8c_masastudi_llsn_mgr_Request;
+use App\m_lkps;
 use App\Models\m_8c_masastudi_llsn_mgr;
 
 class c_8c_masastudi_llsn_mgr extends Controller
@@ -31,7 +32,8 @@ class c_8c_masastudi_llsn_mgr extends Controller
         abort_unless(\Gate::allows('lkps_create'), 403);
 
         $m_8c_masastudi_llsn_mgr = m_8c_masastudi_llsn_mgr::create($request->all());
-
+        $lkps = m_lkps::where('id',35)->first();
+        $lkps->masaStudiLlsnMagister()->save($m_8c_masastudi_llsn_mgr);
         return redirect()->route('admin.r_8c_masastudi_llsn_mgr.index');
     }
 

@@ -17,5 +17,6 @@ class m_3a_2_dospem_utama_ta extends Model
         'ps_lain_ts1',
         'ps_lain_ts',
         'rata_jmlh_bimbingan',
+        'prodi_id'
     ];
 }

@@ -15,6 +15,7 @@ class m_3a5_dosen_industri extends Model
         'bidang_keahlian',
         'sertifikat_profesi',
         'mata_kuliah',
-        'bobot_kredit',     
+        'bobot_kredit',
+        'prodi_id'     
     ];
 }

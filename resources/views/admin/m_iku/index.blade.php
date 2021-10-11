@@ -1,17 +1,33 @@
 @extends('layouts.admin')
 @section('content')
-@can('product_create')
+@can('iku_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route("admin.r_iku.create") }}">
+            <button class="btn btn-success" onclick="createData()">
             Tambah IKU
-            </a>
+            </button>
         </div>
     </div>
 @endcan
 <div class="card">
-    <div class="card-header">
-        Indikator Kinerja Utama
+    <div class="card-header row">
+        <div class="col-8">
+            Indikator Kinerja Utama
+        </div>
+        <div class="col-4">
+            <select class="form-control" id="select_prodi" onchange="selectProdi()">
+                <option value="">Pilih Jurusan</option>
+                @foreach ($user as $item)
+                @if (request()->get('prodi_id') == $item->id)
+                <option selected value="{{$item->id}}">{{$item->name}}</option>
+                @else
+                <option value="{{$item->id}}">{{$item->name}}</option>
+                @endif
+                    
+                @endforeach
+            </select>
+        </div>
+
     </div>
 
     <div class="card-body">
@@ -22,6 +38,7 @@
                         <th width="10">
 
                         </th>
+                        <th>Nilai</th>
                         <th>
                             Indikator
                         </th>
@@ -39,6 +56,16 @@
                             <td>
 
                             </td>
+                            {{-- @can('led_nilai') --}}
+                            <td>
+                                @can('iku_nilai')
+                                <input type="number" id="{{$m_iku->id}}" onkeyup="changeNilai('{{$m_iku->id}}')" value="{{$m_iku->nilai}}" />    
+                                @endcan
+                                @cannot('iku_nilai')
+                                <input type="text" class="text-muted form-control" readonly id="{{$m_iku->id}}" value="{{$m_iku->nilai}}" />    
+                                @endcannot
+                            </td>
+                            {{-- @ --}}
                             <td>
                                 {{ $m_iku->indikator ?? '' }}
                             </td>
@@ -110,6 +137,33 @@
 
   $('.datatable:not(.ajaxTable)').DataTable({ buttons: dtButtons })
 })
+
+function selectProdi() {
+    var prodi_id = $('#select_prodi').val();
+    window.location.href = "{{url('admin/r_iku?prodi_id=')}}"+prodi_id;
+}
+
+function changeNilai(id) {
+    var nilai = $('#'+id).val();
+    axios.post("{{url('api/iku/change/nilai')}}", {
+    id: id,
+    nilai: nilai
+  })
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+}
+
+function createData() {
+    var prodi_id = $('#select_prodi').val();
+    var prodi_name = $("#select_prodi option:selected").text();;
+    window.location.href = "{{url('admin/r_iku/create?prodi_id=')}}"+prodi_id+'&&prodi_name='+prodi_name;
+}
+
+
 
 </script>
 @endsection

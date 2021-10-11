@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\m_3b7_3_lrn_pnltn_lnny_tknlg_cpt\Store_m_3b7_3_lrn_pnltn_lnny_tknlg_cpt_Request;
 use App\Http\Requests\m_3b7_3_lrn_pnltn_lnny_tknlg_cpt\Update_m_3b7_3_lrn_pnltn_lnny_tknlg_cpt_Request;
+use App\m_lkps;
 use App\Models\m_3b7_3_lrn_pnltn_lnny_tknlg_cpt;
+use Illuminate\Support\Facades\Session;
 
 class c_3b7_3_lrn_pnltn_lnny_tknlg_cpt extends Controller
 {
@@ -29,9 +31,13 @@ class c_3b7_3_lrn_pnltn_lnny_tknlg_cpt extends Controller
     public function store(Store_m_3b7_3_lrn_pnltn_lnny_tknlg_cpt_Request $request)
     {
         abort_unless(\Gate::allows('lkps_create'), 403);
-
+        $prodiId = Session::get('prodi_id');
+        $request->merge([
+            'prodi_id' => $prodiId
+        ]);
         $m_3b7_3_lrn_pnltn_lnny_tknlg_cpt = m_3b7_3_lrn_pnltn_lnny_tknlg_cpt::create($request->all());
-
+        $lkps = m_lkps::where('id',20)->first();
+        $lkps->luaranPenelitianLainnyaTeknologiCpt()->save($m_3b7_3_lrn_pnltn_lnny_tknlg_cpt);
         return redirect()->route('admin.r_3b7_3_lrn_pnltn_lnny_tknlg_cpt.index');
     }
 

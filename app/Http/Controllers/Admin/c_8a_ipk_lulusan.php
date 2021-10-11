@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\m_8a_ipk_lulusan\Store_m_8a_ipk_lulusan_Request;
 use App\Http\Requests\m_8a_ipk_lulusan\Update_m_8a_ipk_lulusan_Request;
+use App\m_lkps;
 use App\Models\m_8a_ipk_lulusan;
 
 class c_8a_ipk_lulusan extends Controller
@@ -31,7 +32,8 @@ class c_8a_ipk_lulusan extends Controller
         abort_unless(\Gate::allows('lkps_create'), 403);
 
         $m_8a_ipk_lulusan = m_8a_ipk_lulusan::create($request->all());
-
+        $lkps = m_lkps::where('id',29)->first();
+        $lkps->ipkLulusan()->save($m_8a_ipk_lulusan);
         return redirect()->route('admin.r_8a_ipk_lulusan.index');
     }
 

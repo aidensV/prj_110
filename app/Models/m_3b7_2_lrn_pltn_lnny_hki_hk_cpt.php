@@ -11,5 +11,6 @@ class m_3b7_2_lrn_pltn_lnny_hki_hk_cpt extends Model
         'luaran_penelitian_dan_pkm',
         'tahun',
         'keterangan', 
+        'prodi_id'
     ];  
 }

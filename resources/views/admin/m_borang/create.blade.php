@@ -51,14 +51,8 @@
                     <label for="indi_penilai">Indikator Penilaian</label>
                     <div class="row_indicator">
                         <div class="row ">
-                            <div class="col-2">
-                                <input type="text" class="form-control" readonly id="indi_penilai">
-                            </div>
                             <div class="col-6">
-                                <select id="indi_penilai" onchange="getNilaiIndikator('indi_penilai')" onfocus="changeIndicator('indi_penilai')" name="indi_penilai[]"
-                                    class="form-control indicator_select">
-                                    <option selected disabled> Pilih Indikator</option>
-                                </select>
+                                <input type="text" class="form-control" id="indi_penilai" name="indi_penilai[]">
                             </div>
 
                             <div class="col-4">
@@ -122,26 +116,39 @@
                             Penilaian
                         </p> -->
                 </div>
-                <div class="form-group {{ $errors->has('bobot') ? 'has-error' : '' }}">
-                    <label for="bobot">Bobot</label>
-                    <input  id="bobot" name="bobot" type="number" class="form-control"
-                        value="{{ old('bobot', isset($m_borang) ? $m_borang->bobot : '') }}">
-                    @if ($errors->has('bobot'))
+                <div class="form-group {{ $errors->has('bobot_sumber') ? 'has-error' : '' }}">
+                    <label for="bobot_sumber">Bobot Sumber</label>
+                    <input  id="bobot_sumber" name="bobot_sumber" type="number" class="form-control"
+                        value="{{ old('bobot_sumber', isset($m_borang) ? $m_borang->bobot_sumber : '') }}">
+                    @if ($errors->has('bobot_sumber'))
                         <p class="help-block">
-                            {{ $errors->first('bobot') }}
+                            {{ $errors->first('bobot_sumber') }}
                         </p>
                     @endif
                     <!-- <p class="helper-block">
                             Penilaian
                         </p> -->
                 </div>
-                <div class="form-group {{ $errors->has('persen') ? 'has-error' : '' }}">
-                    <label for="persen">Persen</label>
-                    <input id="persen" name="persen" type="number" class="form-control"
-                        value="{{ old('persen', isset($m_borang) ? $m_borang->persen : '') }}">
-                    @if ($errors->has('persen'))
+                <div class="form-group {{ $errors->has('bobot_ami') ? 'has-error' : '' }}">
+                    <label for="bobot_ami">Bobot AMI</label>
+                    <input id="bobot_ami" name="bobot_ami" type="number" class="form-control"
+                        value="{{ old('bobot_ami', isset($m_borang) ? $m_borang->bobot_ami : '') }}">
+                    @if ($errors->has('bobot_ami'))
                         <p class="help-block">
-                            {{ $errors->first('persen') }}
+                            {{ $errors->first('bobot_ami') }}
+                        </p>
+                    @endif
+                    <!-- <p class="helper-block">
+                            Penilaian
+                        </p> -->
+                </div>
+                <div class="form-group {{ $errors->has('capaian') ? 'has-error' : '' }}">
+                    <label for="capaian">Capaian</label>
+                    <input id="capaian" name="capaian" type="number" class="form-control"
+                        value="{{ old('capaian', isset($m_borang) ? $m_borang->capaian : '') }}">
+                    @if ($errors->has('capaian'))
+                        <p class="help-block">
+                            {{ $errors->first('capaian') }}
                         </p>
                     @endif
                     <!-- <p class="helper-block">
@@ -149,7 +156,7 @@
                         </p> -->
                 </div>
                 <div class="form-group {{ $errors->has('kinerja') ? 'has-error' : '' }}">
-                    <label for="kinerja">Kinerja</label>
+                    <label for="kinerja">Persen Kinerja</label>
                     <input  id="kinerja" name="kinerja" type="number" class="form-control"
                         value="{{ old('kinerja', isset($m_borang) ? $m_borang->kinerja : '') }}">
                     @if ($errors->has('kinerja'))
@@ -206,13 +213,9 @@
         function addRowIndi() {
             var idx = Math.random().toString(16).slice(2);
             $('.row_indicator').append(`  <div style="margin-top:8px;" id="row_` + idx + `" class="row">
-                <div class="col-2">
-                       <input readonly class="form-control" id="value_`+idx+`"/>
-                    </div>
+                
                     <div class="col-6">
-                        <select id="` + idx + `"  onchange="getNilaiIndikator('`+idx+`')" name="indi_penilai[]" onFocus="changeIndicator('`+idx+`')" class="form-control indicator_select">
-                            <option selected disabled> Pilih Indikator</option>
-                        </select>
+                        <input type="text" class="form-control" id="`+idx+`" name="indi_penilai[]" />
                     </div>
                     
                 <div class="col-4">
@@ -228,14 +231,9 @@
         function changeType() {
             $('.row_indicator').html(`
                         <div class="row ">
-                            <div class="col-2">
-                                <input id="value_indi_penilai" class="form-control" readonly />
-                            </div>
+                            
                             <div class="col-6">
-                                <select id="indi_penilai" onchange="getNilaiIndikator('indi_penilai')" onfocus="changeIndicator('indi_penilai')" name="indi_penilai[]"
-                                    class="form-control indicator_select">
-                                    <option selected disabled> Pilih Indikator</option>
-                                </select>
+                                <input type="text" class="form-control" id="indi_penilai" name="indi_penilai[]"/>
                             </div>
 
                             <div class="col-4">

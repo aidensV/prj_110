@@ -17,5 +17,11 @@ class m_1_2_kerjasama_penelitian extends Model
         'bukti_kerjasama',
         'tahun_berakhirnya_kerjasama',
         'lembaga_mitra',
+        'prodi_id'
     ];
+
+    public function lkps()
+    {
+        return $this->morphToMany(m_lkps::class, 'lkpsables');
+    }
 }

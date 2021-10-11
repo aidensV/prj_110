@@ -11,6 +11,12 @@ class m_led extends Model
         'elemen_led',
         'ket',
         'penjelasan',
-        'nilai'
+        'nilai',
+        'prodi_id'
     ];
+
+    public function elementLed()
+    {
+        return $this->belongsTo(elemen_led::class,'elemen_led');
+    }
 }

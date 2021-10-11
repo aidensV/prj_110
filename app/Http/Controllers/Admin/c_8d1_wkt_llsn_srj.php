@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\m_8d1_wkt_llsn_srj\Store_m_8d1_wkt_llsn_srj_Request;
 use App\Http\Requests\m_8d1_wkt_llsn_srj\Update_m_8d1_wkt_llsn_srj_Request;
+use App\m_lkps;
 use App\Models\m_8d1_wkt_llsn_srj;
 
 class c_8d1_wkt_llsn_srj extends Controller
@@ -31,7 +32,8 @@ class c_8d1_wkt_llsn_srj extends Controller
         abort_unless(\Gate::allows('lkps_create'), 403);
 
         $m_8d1_wkt_llsn_srj = m_8d1_wkt_llsn_srj::create($request->all());
-
+        $lkps = m_lkps::where('id',37)->first();
+        $lkps->waktuLulusanSarjana()->save($m_8d1_wkt_llsn_srj);
         return redirect()->route('admin.r_8d1_wkt_llsn_srj.index');
     }
 

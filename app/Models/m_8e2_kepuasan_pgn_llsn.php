@@ -14,5 +14,6 @@ class m_8e2_kepuasan_pgn_llsn extends Model
         'tingkat_kep_peng_c',
         'tingkat_kep_peng_k',
         'rcn_tdk_lanjut_oleh_upps',
+        'prodi_id'
     ];
 }

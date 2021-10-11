@@ -13,5 +13,6 @@ class m_5b_integrasi_keg_penelitian extends Model
         'mata_kuliah',
         'bentuk_integrasi',
         'tahun',
+        'prodi_id'
     ];
 }

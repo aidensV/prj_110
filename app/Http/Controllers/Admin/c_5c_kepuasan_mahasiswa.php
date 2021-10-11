@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\m_5c_kepuasan_mahasiswa\Store_m_5c_kepuasan_mahasiswa_Request;
 use App\Http\Requests\m_5c_kepuasan_mahasiswa\Update_m_5c_kepuasan_mahasiswa_Request;
+use App\m_lkps;
 use App\Models\m_5c_kepuasan_mahasiswa;
+use Illuminate\Support\Facades\Session;
 
 class c_5c_kepuasan_mahasiswa extends Controller
 {
@@ -29,9 +31,13 @@ class c_5c_kepuasan_mahasiswa extends Controller
     public function store(Store_m_5c_kepuasan_mahasiswa_Request $request)
     {
         abort_unless(\Gate::allows('lkps_create'), 403);
-
+        $prodiId = Session::get('prodi_id');
+        $request->merge([
+            'prodi_id' => $prodiId
+        ]);
         $m_5c_kepuasan_mahasiswa = m_5c_kepuasan_mahasiswa::create($request->all());
-
+        $lkps = m_lkps::where('id',25)->first();
+        $lkps->kepusanMahasiswa()->save($m_5c_kepuasan_mahasiswa);
         return redirect()->route('admin.r_5c_kepuasan_mahasiswa.index');
     }
 

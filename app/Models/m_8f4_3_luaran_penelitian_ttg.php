@@ -11,5 +11,6 @@ class m_8f4_3_luaran_penelitian_ttg extends Model
         'luaran_penelitian_dan_pkm',
         'tahun',
         'keterangan',
+        'prodi_id'
     ];
 }

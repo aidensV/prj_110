@@ -18,5 +18,6 @@ class m_3a_3_ewmp_dosen_tetap_pt extends Model
         'tugas_tambahan_penunjang',
         'jumlah',
         'rata_per_semester',
+        'prodi_id'
     ];
 }

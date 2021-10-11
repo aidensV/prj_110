@@ -15,5 +15,6 @@ class m_8d1_wkt_llsn_dip extends Model
         'jmlh_lulusan_pekerjaan_wt_krg3bln',
         'jmlh_lulusan_pekerjaan_wt_3blnsmp6bln',
         'jmlh_lulusan_pekerjaan_wt_lbh6bln',
+        'prodi_id'
     ];
 }

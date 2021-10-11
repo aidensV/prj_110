@@ -17,5 +17,6 @@ class m_1_3_kerjasama_pengabdian_masyarakat extends Model
         'bukti_kerjasama',
         'tahun_berakhirnya_kerjasama',
         'lembaga_mitra',
+        'prodi_id'
     ];
 }

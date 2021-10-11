@@ -44,9 +44,9 @@
             </div>
             <div class="form-group {{ $errors->has( 'indi_penilai') ? 'has-error' : '' }}">
                 <label for="indi_penilai">Indikator Penilaian</label>
-                @foreach ($data_detail as $item)
+                @foreach ($m_borang->indikator as $item)
                     
-                <input type="text" readonly id="indi_penilai" name="indi_penilai" class="form-control" value="{{ $item }}">
+                <input type="text" readonly id="indi_penilai" name="indi_penilai" class="form-control" value="{{ $item->value_indicator }}">
                 @endforeach
                 
                 <!-- <p class="helper-block">
@@ -109,28 +109,40 @@
                     Penilaian
                 </p> -->
             </div>
-            <div class="form-group {{ $errors->has( 'bobot') ? 'has-error' : '' }}">
-                <label for="bobot">Bobot</label>
+            <div class="form-group {{ $errors->has( 'bobot_sumber') ? 'has-error' : '' }}">
+                <label for="bobot_sumber">Bobot Sumber</label>
                 @if(isset(Auth::user()->roles) && Auth::user()->roles[0]->title == 'Staff')
-                <input type="text" readonly name="bobot" class="form-control" value="{{ old('bobot', isset($m_borang) ? $m_borang->bobot : '') }}">
+                <input type="text" readonly name="bobot_sumber" class="form-control" value="{{ old('bobot_sumber', isset($m_borang) ? $m_borang->bobot_sumber : '') }}">
                 @else
-                <input type="text" id="bobot" name="bobot" class="form-control" value="{{ old('bobot', isset($m_borang) ? $m_borang->bobot : '') }}">
+                <input type="text" id="bobot_sumber" name="bobot_sumber" class="form-control" value="{{ old('bobot_sumber', isset($m_borang) ? $m_borang->bobot_sumber : '') }}">
                 @endif
-                @if($errors->has('bobot'))
+                @if($errors->has('bobot_sumber'))
                     <p class="help-block">
-                        {{ $errors->first('bobot') }}
+                        {{ $errors->first('bobot_sumber') }}
                     </p>
                 @endif
                 <!-- <p class="helper-block">
                     Penilaian
                 </p> -->
             </div>
-            <div class="form-group {{ $errors->has( 'persen') ? 'has-error' : '' }}">
-                <label for="persen">Persen</label>
-                <input type="text" id="persen" name="persen" class="form-control" value="{{ old('persen', isset($m_borang) ? $m_borang->persen : '') }}">
-                @if($errors->has('persen'))
+            <div class="form-group {{ $errors->has( 'bobot_ami') ? 'has-error' : '' }}">
+                <label for="bobot_ami">Bobot Ami</label>
+                <input type="text" id="bobot_ami" name="bobot_ami" class="form-control" value="{{ old('bobot_ami', isset($m_borang) ? $m_borang->bobot_ami : '') }}">
+                @if($errors->has('bobot_ami'))
                     <p class="help-block">
-                        {{ $errors->first('persen') }}
+                        {{ $errors->first('bobot_ami') }}
+                    </p>
+                @endif
+                <!-- <p class="helper-block">
+                    Penilaian
+                </p> -->
+            </div>
+            <div class="form-group {{ $errors->has( 'capaian') ? 'has-error' : '' }}">
+                <label for="capaian">Capaian</label>
+                <input type="text" id="capaian" name="capaian" class="form-control" value="{{ old('capaian', isset($m_borang) ? $m_borang->capaian : '') }}">
+                @if($errors->has('capaian'))
+                    <p class="help-block">
+                        {{ $errors->first('capaian') }}
                     </p>
                 @endif
                 <!-- <p class="helper-block">
@@ -138,7 +150,7 @@
                 </p> -->
             </div>
             <div class="form-group {{ $errors->has( 'kinerja') ? 'has-error' : '' }}">
-                <label for="kinerja">Kinerja</label>
+                <label for="kinerja">Persen Kinerja</label>
                 <input type="text" id="kinerja" name="kinerja" class="form-control" value="{{ old('kinerja', isset($m_borang) ? $m_borang->kinerja : '') }}">
                 @if($errors->has('kinerja'))
                     <p class="help-block">

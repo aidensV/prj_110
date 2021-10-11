@@ -22,5 +22,6 @@ class m_5a_kurikulum_capaian_pmbljrn extends Model
         'capaian_pembelajaran_keterampilan_khusus',
         'dokummen_rencana_pembelajaran',
         'unit_penyelenggara',
+        'prodi_id'
     ];
 }

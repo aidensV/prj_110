@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\m_8e2_kepuasan_pgn_llsn\Store_m_8e2_kepuasan_pgn_llsn_Request;
 use App\Http\Requests\m_8e2_kepuasan_pgn_llsn\Update_m_8e2_kepuasan_pgn_llsn_Request;
+use App\m_lkps;
 use App\Models\m_8e2_kepuasan_pgn_llsn;
 
 class c_8e2_kepuasan_pgn_llsn extends Controller
@@ -31,7 +32,8 @@ class c_8e2_kepuasan_pgn_llsn extends Controller
         abort_unless(\Gate::allows('lkps_create'), 403);
 
         $m_8e2_kepuasan_pgn_llsn = m_8e2_kepuasan_pgn_llsn::create($request->all());
-
+        $lkps = m_lkps::where('id',40)->first();
+        $lkps->kepuasanPenggunaLulusan()->save($m_8e2_kepuasan_pgn_llsn);
         return redirect()->route('admin.r_8e2_kepuasan_pgn_llsn.index');
     }
 

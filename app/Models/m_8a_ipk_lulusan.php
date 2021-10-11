@@ -13,5 +13,6 @@ class m_8a_ipk_lulusan extends Model
         'ipk_min',
         'ipk_rata_rata',
         'ipk_maks',
+        'prodi_id'
     ];
 }

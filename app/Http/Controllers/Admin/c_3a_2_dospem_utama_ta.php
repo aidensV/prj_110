@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\m_3a_2_dospem_utama_ta\Store_m_3a_2_dospem_utama_ta_Request;
 use App\Http\Requests\m_3a_2_dospem_utama_ta\Update_m_3a_2_dospem_utama_ta_Request;
+use App\m_lkps;
 use App\Models\m_3a_2_dospem_utama_ta;
+use Illuminate\Support\Facades\Session;
 
 class c_3a_2_dospem_utama_ta extends Controller
 {
@@ -31,7 +33,12 @@ class c_3a_2_dospem_utama_ta extends Controller
         abort_unless(\Gate::allows('lkps_create'), 403);
 
         $m_3a_2_dospem_utama_ta = m_3a_2_dospem_utama_ta::create($request->all());
-
+        $prodiId = Session::get('prodi_id');
+        $request->merge([
+            'prodi_id' => $prodiId
+        ]);
+        $lkps = m_lkps::where('id',7)->first();
+        $lkps->dosePemUtama()->save($m_3a_2_dospem_utama_ta);
         return redirect()->route('admin.r_3a_2_dospem_utama_ta.index');
     }
 

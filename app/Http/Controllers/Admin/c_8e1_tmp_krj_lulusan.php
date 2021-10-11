@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\m_8e1_tmp_krj_lulusan\Store_m_8e1_tmp_krj_lulusan_Request;
 use App\Http\Requests\m_8e1_tmp_krj_lulusan\Update_m_8e1_tmp_krj_lulusan_Request;
+use App\m_lkps;
 use App\Models\m_8e1_tmp_krj_lulusan;
 
 class c_8e1_tmp_krj_lulusan extends Controller
@@ -31,7 +32,8 @@ class c_8e1_tmp_krj_lulusan extends Controller
         abort_unless(\Gate::allows('lkps_create'), 403);
 
         $m_8e1_tmp_krj_lulusan = m_8e1_tmp_krj_lulusan::create($request->all());
-
+        $lkps = m_lkps::where('id',39)->first();
+        $lkps->tmptKerjaLulusan()->save($m_8e1_tmp_krj_lulusan);
         return redirect()->route('admin.r_8e1_tmp_krj_lulusan.index');
     }
 
