@@ -122,7 +122,9 @@ class c_lkps_penilaian extends Controller
             $listlkps = m_lkps::all();
         
         }else{
-            $user= User::all();
+            $user= User::whereHas('roles',function($q){
+                $q->where('title','Staff');
+            })->with('roles')->get();
             
             $listlkps = m_lkps::whereHas('kerjasamaPendidikan',function($q) use($prodiId){
                 $q->where('prodi_id',$prodiId);

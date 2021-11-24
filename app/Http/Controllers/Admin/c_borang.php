@@ -12,6 +12,7 @@ use App\Models\m_borang;
 use App\Models\m_led;
 use App\Models\m_led_penilaian;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use PDF;
 class c_borang extends Controller
@@ -19,12 +20,34 @@ class c_borang extends Controller
     public function index(Request $request)
     {
         abort_unless(\Gate::allows('borang_access'), 403);
+        session(['strata' => $request->s]);
+        $startDate = Carbon::now()->format('Y');
+        $endDate = Carbon::now()->addYear(10)->format('Y');
+
+        if($request->start_date){
+            $startDate = Carbon::createFromFormat('Y',$request->start_date)->format('Y');
+        }
+        if($request->end_date){
+            $endDate = Carbon::createFromFormat('Y',$request->end_date)->format('Y');
+        }
+        $m_borang = m_borang::whereBetWeen('tanggal',[$startDate,$endDate]);
+        // where('prodi_id',$request->prodi_id)
         
-        $m_borang = m_borang::where('prodi_id',$request->prodi_id)->get();
+        
+
+        if($request->s){
+            $m_borang = $m_borang->where('strata',$request->s);
+        }
+
+        $m_borang = $m_borang->get();
+        
         if(isset(Auth::user()->roles) && Auth::user()->roles[0]->title == 'Staff'){
             $user= User::where('id',Auth::user()->id)->get();
         }else{
-            $user= User::all();
+            
+            $user= User::whereHas('roles',function($q){
+                $q->where('title','Staff');
+            })->with('roles')->get();
         }
         return view('admin.m_borang.index', compact('m_borang','user'));
     }
@@ -32,6 +55,8 @@ class c_borang extends Controller
     public function create(Request $request)
     {
         // abort_unless(\Gate::allows('borang_create'), 403);
+        $m_borang = m_borang::where('prodi_id',$request->prodi_id)->latest()->first();
+        
         $prodi_id = $request->prodi_id;
         $prodi_name = $request->prodi_name;
         
@@ -55,6 +80,8 @@ class c_borang extends Controller
         $m_borang->capaian = $request->capaian;
         $m_borang->kinerja = $request->kinerja;
         $m_borang->catatan = $request->catatan;
+        $m_borang->tanggal = $request->tanggal;
+        $m_borang->strata = session()->get('strata');
         $m_borang->save();
         
         foreach ($request->indi_penilai as $key => $value) {    
@@ -72,8 +99,14 @@ class c_borang extends Controller
     {
         abort_unless(\Gate::allows('borang_edit'), 403);
         $m_borang = m_borang::with('indikator')->find($id);
-       
-        return view('admin.m_borang.edit', compact('m_borang'));
+       $oldSkor = m_borang::where('elemen',$m_borang->elemen)->where('prodi_id',$m_borang->prodi_id)->latest()->take(2)->get();
+       $skor_ps = 0;
+       $skor_aud = 0;
+       if(count($oldSkor) == 2){
+           $skor_aud = $oldSkor[1]->skor_auditor;
+           $skor_ps = $oldSkor[1]->skor_PS;
+       }
+        return view('admin.m_borang.edit', compact('m_borang','skor_ps','skor_aud'));
     }
 
     public function update(Update_m_borang_Request $request, $id)

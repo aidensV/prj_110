@@ -8,17 +8,48 @@ use App\Http\Requests\elemen_led\Store_elemen_led_Request;
 use App\Http\Requests\elemen_led\Update_elemen_led_Request;
 use App\Models\elemen_led;
 use App\Models\elemen_led_detail;
+use App\User;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class c_elemen_led extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         abort_unless(\Gate::allows('lkps_access'), 403);
-
-        $elemen_led = elemen_led::all();
+        $start_date = Carbon::now()->subYears(10);
+        $end_date = Carbon::now();
+        session(['strata' => $request->s]);
         
-        return view('admin.elemen_led.index', compact('elemen_led'));
+        if($request->start_date){
+            $start_date = $request->start_date;
+        }
+        if($request->end_date){
+            $end_date = $request->end_date;
+        }
+        
+        $elemen_led = elemen_led::whereBetWeen('created_at',[Carbon::parse($request->start_date)->startOfDay(),Carbon::parse($request->end_date)->endOfDay()]);
+        
+        
+
+        if($request->prodi_id){
+            $elemen_led = $elemen_led->where('prodi_id',$request->prodi_id);
+        }
+        if($request->s){
+            $elemen_led = $elemen_led->where('strata',$request->s);
+        }
+        $elemen_led = $elemen_led->get();
+
+        if(isset(Auth::user()->roles) && Auth::user()->roles[0]->title == 'Staff'){
+            $user= User::where('id',Auth::user()->id)->get();
+        }else{
+            $user= User::whereHas('roles',function($q){
+                $q->where('title','Staff');
+            })->with('roles')->get();
+        }
+        
+        return view('admin.elemen_led.index', compact('elemen_led','user'));
     }
 
     public function create()
@@ -31,14 +62,20 @@ class c_elemen_led extends Controller
     public function store(Request $request)
     {
         abort_unless(\Gate::allows('lkps_create'), 403);
+        $strata = session()->get('strata');
+        $prodi_id = $request->prodi_id;
         $elemen_led = elemen_led::create([
             'kriteria' => $request->kriteria,
+            'strata' => $strata,
+            'prodi_id' => $prodi_id
         ]);
         $elemen_led_id = array();
+        
         for($i=0;$i<sizeof($request->deskripsi);$i++){
             $elemen_led_detail = elemen_led_detail::create([
                 'deskripsi'     => $request->deskripsi[$i],
                 'bobot'       => $request->bobot[$i],
+                
             ]);
             array_push($elemen_led_id,$elemen_led_detail->id);
         }
@@ -51,7 +88,7 @@ class c_elemen_led extends Controller
             'show' => 'pengabdian',
         );
         // return $prasyarat_mengajar->id;
-        return redirect()->route('admin.r_elemen_led.index')->with($notification);
+        return redirect()->to('admin/r_elemen_led/?s='.$strata)->with($notification);
     }
 
     public function edit($id)

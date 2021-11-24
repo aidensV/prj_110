@@ -20,6 +20,52 @@
                     @endforeach
                 </select>
             </div>
+            <div class="col-6">
+                {{-- <form action="{{route('admin.r_elemen_led.index')}}"> --}}
+                    <div class="row mb-4">
+                        @php
+                            $yearSub = \Carbon\Carbon::now()->subYears(10);
+                            $yearNow = \Carbon\Carbon::now()->format('Y');
+                            $yearAdd = \Carbon\Carbon::now()->addYear(10)->format('Y');
+                            if(request()->get('start_date')){
+                                $yearNow = request()->get('start_date');
+                            }
+    
+                            if(request()->get('end_date')){
+                                $yearAdd = request()->get('end_date');
+                            }
+                        @endphp
+    
+                        <select class="form-control select2 col-4 mr-2" id="start_date">
+                            @for ($i = 0; $i <= 20; $i++)
+                        
+                            @if($yearSub->copy()->addYear($i)->format('Y') == $yearNow)
+                            <option selected>{{$yearSub->copy()->addYear($i)->format('Y')}}</option>
+                            @else
+                            <option>{{$yearSub->copy()->addYear($i)->format('Y')}}</option>
+                            @endif
+                                
+                            @endfor
+                            
+                        </select>
+    
+                        <select class="form-control select2 col-4 mr-2" id="end_date">
+                            @for ($i = 0; $i <= 20; $i++)
+                        
+                            @if($yearSub->copy()->addYear($i)->format('Y') == $yearAdd)
+                            <option selected>{{$yearSub->copy()->addYear($i)->format('Y')}}</option>
+                            @else
+                            <option>{{$yearSub->copy()->addYear($i)->format('Y')}}</option>
+                            @endif
+                                
+                            @endfor
+                            
+                        </select>
+                            <button type="button" onclick="changeDate()" class="btn btn-primary col-2">Cari</button>
+                        </div>
+                    {{-- </form> --}}
+    
+            </div>
         </div>
 
         <div class="card-body">

@@ -10,5 +10,6 @@ class elemen_led_detail extends Model
     protected $fillable=[
         'deskripsi',
         'bobot',
+        'strata'
     ];
 }

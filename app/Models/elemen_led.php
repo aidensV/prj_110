@@ -10,6 +10,7 @@ class elemen_led extends Model
     protected $table='elemen_led';
     protected $fillable=[
         'kriteria',
+        'strata'
     ];
     public function detail(){
         return $this->belongsToMany(elemen_led_detail::class);

@@ -15,7 +15,7 @@ class c_elemen_lkps extends Controller
         abort_unless(\Gate::allows('lkps_access'), 403);
 
         $m_elemen_lkps = m_elemen_lkps::all();
-
+        
         return view('admin.m_elemen_lkps.index', compact('m_elemen_lkps'));
     }
 

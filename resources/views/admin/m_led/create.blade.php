@@ -23,12 +23,32 @@
                     </p>
                 @endif
             </div>
+                @php
+                     $yearSub = \Carbon\Carbon::now()->subYears(10);
+                     $yearNow = \Carbon\Carbon::now()->format('Y');
+                     
+                @endphp
+            <div class="form-group">
+                <label for="tanggal">Tanggal<span class="text-danger">*</span></label>
+                <select class="form-control select2" name="tanggal" id="tanggal" required>
+                    @for ($i = 0; $i < 20; $i++)
+                   
+                    @if($yearSub->copy()->addYear($i)->format('Y') == $yearNow)
+                    <option selected>{{$yearSub->copy()->addYear($i)->format('Y')}}</option>
+                    @else
+                    <option>{{$yearSub->copy()->addYear($i)->format('Y')}}</option>
+                    @endif
+                        
+                    @endfor
+                    
+                </select>
+            </div>
             <div class="form-group {{ $errors->has('ket') ? 'has-error' : '' }}">
                 <label for="ket">Keterangan*</label>
                 <p class="helper-block text-muted">
                 <i class="fa fa-exclamation-circle" aria-hidden="true"></i> ket
                 </p>
-                <input type="text" id="ket" name="ket" class="form-control" value="{{ old('ket', isset($r_led) ? $r_led->ket : '') }}">
+                <input type="text" readonly id="ket" name="ket" class="form-control" value="{{ old('ket', isset($r_led) ? $r_led->ket : '') }}">
                 @if($errors->has('ket'))
                     <p class="help-block text-danger mt-2">
                     <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ $errors->first('ket') }}
@@ -38,19 +58,21 @@
             <div class="d-none">
                 <label for="ket">Nilai*</label>
                 <input type="text" id="prodi_id" name="prodi_id" class="form-control" value="{{ request()->get('prodi_id') }}">
-                <input type="number" id="nilai" name="nilai" class="form-control" value="{{ old('nilai', isset($r_led) ? $r_led->nilai : '') }}">
+                <input type="number" readonly id="nilai" name="nilai" class="form-control" value="{{ old('nilai', isset($r_led) ? $r_led->nilai : '') }}">
                 @if($errors->has('nilai'))
                     <p class="help-block text-danger mt-2">
                     <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ $errors->first('nilai') }}
                     </p>
                 @endif
             </div>
+
+            
             <div class="form-group {{ $errors->has('penjelasan') ? 'has-error' : '' }}">
                     <label for="semester">File SK<span class="text-danger"><span class="text-danger">*</span></span></label>
                     <div class="custom-file">
-                        <input name="penjelasan" onchange="ValidateExtension('file-upload','1_bukti_error_msg')" id="file-upload" onclick="change_fileName(this)" type="file" class="custom-file-input @error('file') is-invalid @enderror" aria-describedby="inputGroupFile01" lang="in">
+                        {{-- <input name="penjelasan"  onchange="ValidateExtension('file-upload','1_bukti_error_msg')" id="file-upload" onclick="change_fileName(this)" type="file" class="custom-file-input @error('file') is-invalid @enderror" aria-describedby="inputGroupFile01" lang="in"> --}}
                         <span class="text-danger" id="1_bukti_error_msg"></span>
-                        <label class="custom-file-label" for="file">Unggah SK</label>
+                        <label class="custom-file-label" for="file" style="background-color: #e9ecef !important;">Unggah SK</label>
                     </div>
                     @if($errors->has('penjelasan'))
                     <p class="help-block text-danger">
@@ -82,5 +104,7 @@
       }
     });
     }
+
+    
 </script>
 @endsection

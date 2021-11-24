@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\c_borang;
 use App\Http\Controllers\Admin\c_lkps_penilaian;
+use App\Http\Controllers\BeritaAcaraController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -266,7 +267,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('r_borang', 'c_borang');
     Route::get('borang/export-pdf',[c_borang::class,'exportpdf']);
 
-    
+    Route::prefix('berita-acara')->group(function(){
+        Route::get('/',[BeritaAcaraController::class,'index']);
+        Route::get('/create',[BeritaAcaraController::class,'create']);
+        Route::post('/store',[BeritaAcaraController::class,'store']);
+        Route::get('/print/{id}',[BeritaAcaraController::class,'print']);
+        Route::delete('/destroy/{id}',[BeritaAcaraController::class,'destroy'])->name('berita-acara.destroy');
+    });
 
    
 

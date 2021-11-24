@@ -76,6 +76,71 @@
                     </li>
                 @endcan
                 @can('elemenled_access')
+
+                {{-- <li class="nav-item has-treeview {{ request()->is('admin/r_elemen_led*') ? 'menu-open' : '' }}">
+                    <a class="nav-link nav-dropdown-toggle">
+                        <i class="nav-icon fas fa-users">
+
+                        </i>
+                        <p>
+                            <span>Elemen LED</span>
+                            <i class="right fa fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        
+                            <li class="nav-item">
+                                
+                                
+
+                                <a href="{{ url("admin/r_elemen_led?s=s3&prodi_id=") }}" class="nav-link {{   request()->is('admin/r_elemen_led') && request()->query()['s'] == 's3' ? 'active' : '' }}">
+                                    
+                                    <i class="nav-icon fas fa-angle-double-right">
+
+                                    </i>
+                                    <p>
+                                        <span>S3</span>
+                                    </p>
+                                </a>
+                            </li>
+                        
+                        
+                            <li class="nav-item">
+                                <a href="{{ url("admin/r_elemen_led?s=s2&prodi_id=") }}" class="nav-link {{  request()->is('admin/r_elemen_led') && request()->query()['s'] == 's2' ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-angle-double-right">
+
+                                    </i>
+                                    <p>
+                                        <span>S2</span>
+                                    </p>
+                                </a>
+                            </li>
+                      
+                            <li class="nav-item">
+                                <a href="{{ url("admin/r_elemen_led?s=s1&prodi_id=") }}" class="nav-link {{ request()->is('admin/r_elemen_led') && request()->query()['s'] == 's1' ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-angle-double-right">
+
+                                    </i>
+                                    <p>
+                                        <span>S1</span>
+                                    </p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="{{ url("admin/r_elemen_led?s=d3&prodi_id=") }}" class="nav-link {{ request()->is('admin/r_elemen_led') && request()->query()['s'] == 'd3' ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-angle-double-right">
+
+                                    </i>
+                                    <p>
+                                        <span>D3</span>
+                                    </p>
+                                </a>
+                            </li>
+                        
+                    </ul>
+                </li> --}}
+
                 <li class="nav-item">
                     <a href="{{ url("admin/r_elemen_led") }}" class="nav-link {{ request()->is('admin/r_elemen_led') || request()->is('admin/r_elemen_led/*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-cogs">
@@ -89,6 +154,92 @@
                 @endcan
                 @can('led_access')
                 @if(isset(Auth::user()->roles) && Auth::user()->roles[0]->title == 'Staff')
+                <li class="nav-item">
+                    <a href="{{ url("admin/r_led?prodi_id=").Auth::user()->id }}" class="nav-link {{ request()->is('admin/r_led') || request()->is('admin/r_led/*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-cogs">
+
+                        </i>
+                        <p>
+                            <span>LED</span>
+                        </p>
+                    </a>
+                </li>
+                @else
+                <li class="nav-item">
+                    <a href="{{ url("admin/r_led?prodi_id=") }}" class="nav-link {{ request()->is('admin/r_led') || request()->is('admin/r_led/*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-cogs">
+
+                        </i>
+                        <p>
+                            <span>LED</span>
+                        </p>
+                    </a>
+                </li>
+                {{-- <li class="nav-item has-treeview {{ request()->is('admin/r_led*') ? 'menu-open' : '' }}">
+                    <a class="nav-link nav-dropdown-toggle">
+                        <i class="nav-icon fas fa-users">
+
+                        </i>
+                        <p>
+                            <span>LED</span>
+                            <i class="right fa fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        
+                            <li class="nav-item">
+                                
+                                
+
+                                <a href="{{ url("admin/r_led?s=s3&prodi_id=") }}" class="nav-link {{   request()->is('admin/r_led') && request()->query()['s'] == 's3' ? 'active' : '' }}">
+                                    
+                                    <i class="nav-icon fas fa-angle-double-right">
+
+                                    </i>
+                                    <p>
+                                        <span>S3</span>
+                                    </p>
+                                </a>
+                            </li>
+                        
+                        
+                            <li class="nav-item">
+                                <a href="{{ url("admin/r_led?s=s2&prodi_id=") }}" class="nav-link {{  request()->is('admin/r_led') && request()->query()['s'] == 's2' ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-angle-double-right">
+
+                                    </i>
+                                    <p>
+                                        <span>S2</span>
+                                    </p>
+                                </a>
+                            </li>
+                      
+                            <li class="nav-item">
+                                <a href="{{ url("admin/r_led?s=s1&prodi_id=") }}" class="nav-link {{ request()->is('admin/r_led') && request()->query()['s'] == 's1' ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-angle-double-right">
+
+                                    </i>
+                                    <p>
+                                        <span>S1</span>
+                                    </p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="{{ url("admin/r_led?s=d3&prodi_id=") }}" class="nav-link {{ request()->is('admin/r_led') && request()->query()['s'] == 'd3' ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-angle-double-right">
+
+                                    </i>
+                                    <p>
+                                        <span>D3</span>
+                                    </p>
+                                </a>
+                            </li>
+                        
+                    </ul>
+                </li> --}}
+                @endif
+                {{-- 
                     <li class="nav-item">
                         <a href="{{ url("admin/r_led?prodi_id=").Auth::user()->id }}" class="nav-link {{ request()->is('admin/r_led') || request()->is('admin/r_led/*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-cogs">
@@ -110,7 +261,7 @@
                             </p>
                         </a>
                     </li>
-                    @endif
+                    @endif --}}
                 @endcan
                 @can('lkps_access')
                 @if(isset(Auth::user()->roles) && Auth::user()->roles[0]->title == 'Staff')
@@ -139,6 +290,92 @@
                 @endcan
                 @can('iku_access')
                 @if(isset(Auth::user()->roles) && Auth::user()->roles[0]->title == 'Staff')
+                <li class="nav-item">
+                    <a href="{{ url("admin/r_iku?prodi_id=").Auth::user()->id }}" class="nav-link {{ request()->is('admin/r_iku') || request()->is('admin/r_iku/*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-cogs">
+
+                        </i>
+                        <p>
+                            <span>IKU</span>
+                        </p>
+                    </a>
+                </li>
+                @else
+                <li class="nav-item">
+                    <a href="{{ url("admin/r_iku?prodi_id=") }}" class="nav-link {{ request()->is('admin/r_iku') || request()->is('admin/r_iku/*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-cogs">
+
+                        </i>
+                        <p>
+                            <span>IKU</span>
+                        </p>
+                    </a>
+                </li>
+                {{-- <li class="nav-item has-treeview {{ request()->is('admin/r_iku*') ? 'menu-open' : '' }}">
+                    <a class="nav-link nav-dropdown-toggle">
+                        <i class="nav-icon fas fa-users">
+
+                        </i>
+                        <p>
+                            <span>IKU</span>
+                            <i class="right fa fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        
+                            <li class="nav-item">
+                                
+                                
+
+                                <a href="{{ url("admin/r_iku?s=s3&prodi_id=") }}" class="nav-link {{   request()->is('admin/r_iku') && request()->query()['s'] == 's3' ? 'active' : '' }}">
+                                    
+                                    <i class="nav-icon fas fa-angle-double-right">
+
+                                    </i>
+                                    <p>
+                                        <span>S3</span>
+                                    </p>
+                                </a>
+                            </li>
+                        
+                        
+                            <li class="nav-item">
+                                <a href="{{ url("admin/r_iku?s=s2&prodi_id=") }}" class="nav-link {{  request()->is('admin/r_iku') && request()->query()['s'] == 's2' ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-angle-double-right">
+
+                                    </i>
+                                    <p>
+                                        <span>S2</span>
+                                    </p>
+                                </a>
+                            </li>
+                      
+                            <li class="nav-item">
+                                <a href="{{ url("admin/r_iku?s=s1&prodi_id=") }}" class="nav-link {{ request()->is('admin/r_iku') && request()->query()['s'] == 's1' ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-angle-double-right">
+
+                                    </i>
+                                    <p>
+                                        <span>S1</span>
+                                    </p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="{{ url("admin/r_iku?s=d3&prodi_id=") }}" class="nav-link {{ request()->is('admin/r_iku') && request()->query()['s'] == 'd3' ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-angle-double-right">
+
+                                    </i>
+                                    <p>
+                                        <span>D3</span>
+                                    </p>
+                                </a>
+                            </li>
+                        
+                    </ul>
+                </li> --}}
+                @endif
+                {{-- @if(isset(Auth::user()->roles) && Auth::user()->roles[0]->title == 'Staff')
                     <li class="nav-item">
                         <a href="{{ url("admin/r_iku?prodi_id=").Auth::user()->id }}" class="nav-link {{ request()->is('admin/r_iku') || request()->is('admin/r_iku/*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-cogs">
@@ -160,7 +397,7 @@
                             </p>
                         </a>
                     </li>
-                    @endif
+                    @endif --}}
                 @endcan
                 
                 @can('borang_access')
@@ -184,6 +421,32 @@
                             </i>
                             <p>
                                 <span>Borang Penilaian</span>
+                            </p>
+                        </a>
+                    </li>
+                    @endif
+                @endcan
+
+                @can('berita_acara_access')
+                @if(isset(Auth::user()->roles) && Auth::user()->roles[0]->title == 'Staff')
+                <li class="nav-item">
+                    <a href="{{ url("admin/berita-acara/create?prodi_id=".Auth::user()->id) }}" class="nav-link {{ request()->is('admin/berita-acara') || request()->is('admin/berita-acara/*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-cogs">
+
+                        </i>
+                        <p>
+                            <span>Berita Acara</span>
+                        </p>
+                    </a>
+                </li>
+                @else
+                    <li class="nav-item">
+                        <a href="{{ url("admin/berita-acara/create") }}" class="nav-link {{ request()->is('admin/berita-acara') || request()->is('admin/berita-acara/*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-cogs">
+
+                            </i>
+                            <p>
+                                <span>Berita Acara</span>
                             </p>
                         </a>
                     </li>

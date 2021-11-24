@@ -12,7 +12,9 @@ class m_led extends Model
         'ket',
         'penjelasan',
         'nilai',
-        'prodi_id'
+        'tanggal',
+        'prodi_id',
+        'strata'
     ];
 
     public function elementLed()

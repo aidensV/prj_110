@@ -10,6 +10,9 @@ class m_iku extends Model
     protected $fillable=[
         'indikator',
         'jmlh',
-        'prodi_id'
+        'prodi_id',
+        'element_id',
+        'strata',
+        'tanggal'
     ];
 }

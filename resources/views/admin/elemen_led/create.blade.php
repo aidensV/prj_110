@@ -9,6 +9,8 @@
     <div class="card-body">
         <form action="{{ route("admin.r_elemen_led.store") }}" method="POST" enctype="multipart/form-data">
             @csrf
+            <input type="hidden" id="s" name="s" class="form-control" value="{{ request()->get('s') }}">
+            <input type="hidden" id="prodi_id" name="prodi_id" class="form-control" value="{{ request()->get('prodi_id') }}">
             <div class="form-group {{ $errors->has( 'kriteria') ? 'has-error' : '' }}">
                 <label for="kriteria">Kriteria</label>
                 <input type="text" id="kriteria" name="kriteria" class="form-control" value="{{ old('kriteria', isset($elemen_led) ? $elemen_led->kriteria : '') }}">
