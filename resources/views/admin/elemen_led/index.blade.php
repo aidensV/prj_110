@@ -40,6 +40,7 @@
                 <option {{session()->get('strata') == 's2' ? 'selected' : ''}}  value="s2">Borang S2</option>
                 <option {{session()->get('strata') == 's3' ? 'selected' : ''}} value="s3">Borang S3</option>
                 <option {{session()->get('strata') == 'd3' ? 'selected' : ''}}  value="d3">Borang D3</option>
+                <option {{session()->get('strata') == 'fakultas' ? 'selected' : ''}}  value="fakultas">Borang Fakultas</option>
             </select>
             {{-- @endcan --}}
             {{-- @if(isset(Auth::user()->roles) && Auth::user()->roles[0]->title != 'Staff') --}}

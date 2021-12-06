@@ -67,6 +67,7 @@
                     
                 
                 {{-- @if(isset(Auth::user()->roles) && Auth::user()->roles[0]->title == 'Staff') --}}
+                
                 @if(isset(Auth::user()->roles) && Auth::user()->roles[0]->title == 'Super Admin')
                 
                 
@@ -76,6 +77,7 @@
                     <option {{session()->get('strata') == 's2' ? 'selected' : ''}}  value="s2">Borang S2</option>
                     <option {{session()->get('strata') == 's3' ? 'selected' : ''}} value="s3">Borang S3</option>
                     <option {{session()->get('strata') == 'd3' ? 'selected' : ''}}  value="d3">Borang D3</option>
+                    <option {{session()->get('strata') == 'fakultas' ? 'selected' : ''}}  value="fakultas">Borang Fakultas</option>
                 </select>
             @else
             
@@ -92,6 +94,7 @@
                     <option {{session()->get('strata') == 's2' ? 'selected' : ''}}  value="s2">Borang S2</option>
                     <option {{session()->get('strata') == 's3' ? 'selected' : ''}} value="s3">Borang S3</option>
                     <option {{session()->get('strata') == 'd3' ? 'selected' : ''}}  value="d3">Borang D3</option>
+                    <option {{session()->get('strata') == 'fakultas' ? 'selected' : ''}}  value="fakultas">Borang Fakultas</option>
                 </select>
             </div>
             @endif
@@ -161,6 +164,9 @@
                             Elemen
                         </th>
                         <th>
+                            Indikator Penilaian &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </th>
+                        <th>
                             No Standar
                         </th>
                         <th>
@@ -203,6 +209,11 @@
                             </td>
                             <td>
                                 {{ $m_borang->elemen ?? '' }}
+                            </td>
+                            <td width="100%">
+                                @foreach($m_borang->indikator as $indikator)
+                                <span style="margin: 15px">{{$indikator->nomor ?? ''}}</span>{{$indikator->nomor != null ?'|' : ''}}&nbsp;{{  $indikator->value_indicator?? '' }}<br>
+                                @endforeach
                             </td>
                             <td>
                                 {{ $m_borang->no_stndr ?? '' }}
@@ -331,6 +342,7 @@ function changeProdi() {
 }
 
 function selectProdi() {
+    console.log("ss");
     var prodi_id = $('#select_prodi').val();
     var start_date = $('#start_date').val();
     var end_date = $('#end_date').val();

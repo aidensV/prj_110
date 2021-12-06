@@ -35,6 +35,16 @@
                             Isikan Elemen
                         </p> -->
                 </div>
+
+                <div class="form-group {{ $errors->has('no_stndr') ? 'has-error' : '' }}">
+                    <label for="kode_elemen">Kode Elemen</label>
+                    <input type="text" id="kode_elemen" name="kode_elemen" class="form-control"
+                        value="{{ old('kode_elemen', isset($m_borang) ? $m_borang->kode_elemen : '') }}">
+                   
+                    <!-- <p class="helper-block">
+                            Isikan Elemen
+                        </p> -->
+                </div>
                 <div class="form-group">
                     <label for="indi_penilai">Program Studi</label>
                     <input readonly value="{{$prodi_name}}"  class="form-control" type="text">
@@ -42,9 +52,10 @@
                 </div>
                 <div class="form-group">
                     <label for="indi_penilai">Tipe</label>
-                    <select name="tipe" id="tipe" class="form-control" onchange="changeType()">
-                        <option value="led">LED</option>
+                    <select name="tipe" id="tipe" class="form-control" onchange="changeType(this.value)">
                         <option value="lkps">LKPS</option>
+                        <option value="iku">IKU</option>
+                        <option value="led">LED</option>
                     </select>
                 </div>
                 @php
@@ -72,7 +83,7 @@
                     <div class="row_indicator">
                         <div class="row ">
                             <div class="col-6">
-                                <input type="text" class="form-control" id="indi_penilai" name="indi_penilai[]">
+                                <textarea row="1" type="text" class="form-control" id="indi_penilai" name="indi_penilai[]"> </textarea>
                             </div>
 
                             <div class="col-4">
@@ -86,7 +97,7 @@
                 </div>
                 <div class="form-group {{ $errors->has('skor_PS') ? 'has-error' : '' }}">
                     <label for="skor_PS">Skor PS</label>
-                    <input  id="skor_PS" name="skor_PS" type="number" class="form-control"
+                    <input  id="skor_PS" readonly name="skor_PS" type="number" class="form-control"
                         value="{{ old('skor_PS', isset($m_borang) ? $m_borang->skor_PS : '') }}">
                     @if ($errors->has('skor_PS'))
                         <p class="help-block">
@@ -99,7 +110,7 @@
                 </div>
                 <div class="form-group {{ $errors->has('skor_auditor') ? 'has-error' : '' }}">
                     <label for="skor_auditor">Skor_Auditor</label>
-                    <input  id="skor_auditor" name="skor_auditor" type="number" class="form-control"
+                    <input  id="skor_auditor" readonly name="skor_auditor" type="number" class="form-control"
                         value="{{ old('skor_auditor', isset($m_borang) ? $m_borang->skor_auditor : '') }}">
                     @if ($errors->has('skor_auditor'))
                         <p class="help-block">
@@ -164,7 +175,7 @@
                 </div>
                 <div class="form-group {{ $errors->has('capaian') ? 'has-error' : '' }}">
                     <label for="capaian">Capaian</label>
-                    <input id="capaian" name="capaian" type="number" class="form-control"
+                    <input id="capaian" readonly name="capaian" type="number" class="form-control"
                         value="{{ old('capaian', isset($m_borang) ? $m_borang->capaian : '') }}">
                     @if ($errors->has('capaian'))
                         <p class="help-block">
@@ -177,7 +188,8 @@
                 </div>
                 <div class="form-group {{ $errors->has('kinerja') ? 'has-error' : '' }}">
                     <label for="kinerja">Persen Kinerja</label>
-                    <input  id="kinerja" name="kinerja" type="number" class="form-control"
+
+                    <input  id="kinerja" readonly name="kinerja" type="number" class="form-control"
                         value="{{ old('kinerja', isset($m_borang) ? $m_borang->kinerja : '') }}">
                     @if ($errors->has('kinerja'))
                         <p class="help-block">
@@ -232,10 +244,18 @@
 
         function addRowIndi() {
             var idx = Math.random().toString(16).slice(2);
+            var tipe = $('#tipe').val();
+            var expandForm = '';
+            if(tipe == 'led'){
+                expandForm = `<div class="col-2">
+                                <input type="text" class="form-control" id="nomor_`+idx+`" name="nomor[]"/>
+                            </div> `;
+            }
+            
             $('.row_indicator').append(`  <div style="margin-top:8px;" id="row_` + idx + `" class="row">
-                
+                    `+expandForm+`
                     <div class="col-6">
-                        <input type="text" class="form-control" id="`+idx+`" name="indi_penilai[]" />
+                        <textarea row="1" type="text" class="form-control" id="`+idx+`" name="indi_penilai[]" ></textarea>
                     </div>
                     
                 <div class="col-4">
@@ -248,12 +268,18 @@
             console.log(params)
             $('#' + params).remove();
         }
-        function changeType() {
+        function changeType(value) {
+            var expandForm = '';
+            if(value == 'led'){
+                expandForm = `<div class="col-2">
+                                <input type="text" class="form-control" id="nomor_1" name="nomor[]"/>
+                            </div> `;
+            }
             $('.row_indicator').html(`
                         <div class="row ">
-                            
+                            `+expandForm+`
                             <div class="col-6">
-                                <input type="text" class="form-control" id="indi_penilai" name="indi_penilai[]"/>
+                                <textarea  type="text" class="form-control" id="indi_penilai" name="indi_penilai[]"></textarea>
                             </div>
 
                             <div class="col-4">

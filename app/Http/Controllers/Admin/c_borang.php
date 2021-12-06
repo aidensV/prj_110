@@ -30,7 +30,7 @@ class c_borang extends Controller
         if($request->end_date){
             $endDate = Carbon::createFromFormat('Y',$request->end_date)->format('Y');
         }
-        $m_borang = m_borang::whereBetWeen('tanggal',[$startDate,$endDate]);
+        $m_borang = m_borang::with('indikator')->whereBetWeen('tanggal',[$startDate,$endDate]);
         // where('prodi_id',$request->prodi_id)
         
         
@@ -81,6 +81,7 @@ class c_borang extends Controller
         $m_borang->kinerja = $request->kinerja;
         $m_borang->catatan = $request->catatan;
         $m_borang->tanggal = $request->tanggal;
+        $m_borang->kode_elemen = $request->kode_elemen;
         $m_borang->strata = session()->get('strata');
         $m_borang->save();
         
@@ -89,6 +90,11 @@ class c_borang extends Controller
             $borangNilai = new borang_indicator_nilai();
             $borangNilai->value_indicator = $value;
             $borangNilai->id_borang = $m_borang->id;
+            if(isset($request->nomor)){
+                if(isset($request->nomor[$key])){
+                    $borangNilai->nomor = $request->nomor[$key];
+                }
+            }
             $borangNilai->type = $request->tipe;
             $borangNilai->save();
         }
@@ -99,7 +105,16 @@ class c_borang extends Controller
     {
         abort_unless(\Gate::allows('borang_edit'), 403);
         $m_borang = m_borang::with('indikator')->find($id);
-       $oldSkor = m_borang::where('elemen',$m_borang->elemen)->where('prodi_id',$m_borang->prodi_id)->latest()->take(2)->get();
+        // if($m_borang->elemen)
+        // getvalue form fakultas
+        $checkOldSkor = m_borang::where('strata','fakultas')->where('kode_elemen',$m_borang->kode_elemen)->latest()->take(2)->get();
+        
+        if(count($checkOldSkor) > 0){
+            $oldSkor = $checkOldSkor;
+        }else{
+            $oldSkor = m_borang::where('elemen',$m_borang->elemen)->where('prodi_id',$m_borang->prodi_id)->latest()->take(2)->get();
+        }
+        
        $skor_ps = 0;
        $skor_aud = 0;
        if(count($oldSkor) == 2){

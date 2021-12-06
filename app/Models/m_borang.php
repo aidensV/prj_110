@@ -20,6 +20,7 @@ class m_borang extends Model
         'kinerja',
         'capaian',
         'catatan',
+        'kode_elemen'
     ];
 
     public function indikator()
