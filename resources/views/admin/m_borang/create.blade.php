@@ -136,7 +136,7 @@
                 </div>
                 <div class="form-group {{ $errors->has('stnd_unila') ? 'has-error' : '' }}">
                     <label for="stnd_unila">Standar Unila</label>
-                    <input  id="stnd_unila" name="stnd_unila" type="number" class="form-control"
+                    <input  id="stnd_unila" name="stnd_unila" type="text" class="form-control"
                         value="{{ old('stnd_unila', isset($m_borang) ? $m_borang->stnd_unila : '') }}">
                     @if ($errors->has('stnd_unila'))
                         <p class="help-block">
