@@ -149,7 +149,7 @@
                 </div>
                 <div class="form-group {{ $errors->has('bobot_sumber') ? 'has-error' : '' }}">
                     <label for="bobot_sumber">Bobot Sumber</label>
-                    <input  id="bobot_sumber" name="bobot_sumber" type="number" class="form-control"
+                    <input  id="bobot_sumber" name="bobot_sumber" type="text" class="form-control"
                         value="{{ old('bobot_sumber', isset($m_borang) ? $m_borang->bobot_sumber : '') }}">
                     @if ($errors->has('bobot_sumber'))
                         <p class="help-block">
@@ -162,7 +162,7 @@
                 </div>
                 <div class="form-group {{ $errors->has('bobot_ami') ? 'has-error' : '' }}">
                     <label for="bobot_ami">Bobot AMI</label>
-                    <input id="bobot_ami" name="bobot_ami" type="number" class="form-control"
+                    <input id="bobot_ami" name="bobot_ami" type="text" class="form-control"
                         value="{{ old('bobot_ami', isset($m_borang) ? $m_borang->bobot_ami : '') }}">
                     @if ($errors->has('bobot_ami'))
                         <p class="help-block">
